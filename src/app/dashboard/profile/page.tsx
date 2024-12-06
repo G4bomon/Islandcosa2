@@ -1,35 +1,57 @@
 "use client";
 import { useSession, signOut } from "next-auth/react";
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 function ProfilePage() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
-  console.log(session, status);
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex flex-col gap-y-10 items-center justify-center">
-      <h1 className="font-bold text-3xl">Profile</h1>
-
-      <pre className="bg-zinc-800 p-4">
-        {JSON.stringify(
-          {
-            session,
-            status,
-          },
-          null,
-          2
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+      <Button variant="outline">
+        {session && session.user ? (
+        <p>{session.user.fullname}</p>
+        ) : (
+        <p>Profile</p> // or any other fallback message
         )}
-      </pre>
-
-      <button
-        className="bg-zinc-800 px-4 py-2 block mb-2"
-        onClick={() => {
-          signOut();
-        }}
-      >
-        Signout
-      </button>
-    </div>
+      </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>
+          {session && session.user ? (
+          <p>{session.user.email}</p>
+          ) : (
+          <p>email</p> // or any other fallback message
+          )}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            Seccion 1
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            Seccion 2
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            Seccion 3
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={()=> {signOut();}}>
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
