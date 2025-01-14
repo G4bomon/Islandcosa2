@@ -5,16 +5,9 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Image from "next/image";
 
 function Signup() {
   const [error, setError] = useState();
@@ -47,41 +40,58 @@ function Signup() {
   };
 
   return (
-    <Card className="w-[350px]">
-      <CardHeader>
-        <CardTitle>Register</CardTitle>
-        <CardDescription>Please fill the registration form</CardDescription>
-      </CardHeader>
-      <form onSubmit={handleSubmit}>
-      <CardContent>
-        
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Name</Label>
-              <Input type="text" name="fullname" placeholder="input username" />
+    <>
+      <div className="mt-10 flex flex-col w-11/12 max-w-lg md:w-11/12 mx-auto shadow-lg rounded-lg">
+        <div className="logo-section bg-logo-background bg-cover bg-clip-content grow-0  mb-2 rounded-t-lg">
+          <div>
+            <Image
+              src="/img/logo-round.png"
+              alt="PreDespacho Logo"
+              width={80}
+              height={80}
+              className="mx-auto my-4"
+            />
+          </div>
+        </div>
+        <div className="login-section p-8">
+          <div className="login-title mb-6">
+            <h1 className="text-3xl mb-3">Registro</h1>
+            <p className="text-sm text-slate-500">Por favor llena los datos</p>
+          </div>
+          <form onSubmit={handleSubmit}>
+
+            <div>
+              <div className="flex flex-col space-y-1.5 mb-3">
+                <Label htmlFor="name" className="block font-semibold text-base mb-1">Nombre</Label>
+                <Input type="text" name="fullname" className="hover:shadow-md" placeholder="Ingresa tu nombre" />
+              </div>
+              <div className="flex flex-col space-y-1.5 mb-3">
+                <Label htmlFor="email" className="block font-semibold text-base mb-1">Correo electronico</Label>
+                <Input type="email" name="email" className="hover:shadow-md" placeholder="Ingresa tu correo" />
+              </div>
+              <div className="flex flex-col space-y-1.5 mb-3">
+                <Label htmlFor="password" className="block font-semibold text-base mb-1">Contraseña</Label>
+                <Input type="password" name="password" className="hover:shadow-md" placeholder="Ingresa tu contraseña" />
+              </div>
+              {error && (
+                <div className="flex justify-center mt-4 bg-red-600 text-white rounded-md mb-4"> {error} </div>
+              )}
+              <Button className="flex mt-1 w-full hover:bg-amber-400">Registrate</Button>
             </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="email">Email</Label>
-              <Input type="email" name="email" placeholder="input email" />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="password">Password</Label>
-              <Input type="password" name="password" placeholder="input password" />
+          </form>
+          <div className="flex flex-col items-center my-4">
+            <div>
+              <p className="text-sm text-slate-500">
+                ¿Ya tienes cuenta? {" "}
+                <Link href={"/login"} className="hover:text-blue-500">
+                  inicia sesión.
+                </Link>
+              </p>
             </div>
           </div>
-          {error && (
-          <div className="flex justify-center mt-4 bg-red-600 text-white rounded-md"> {error} </div>
-          )}
-          
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Link href={"/login"} className="hover:text-blue-500"> 
-            do you have an account? 
-        </Link>
-        <Button>register</Button>
-      </CardFooter>
-      </form>
-    </Card>
+        </div>
+      </div>
+    </>
   );
 }
 
