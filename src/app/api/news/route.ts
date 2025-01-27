@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     await connectDB();
-    var { title, content, category, image, youtube, tiktok } = await request.json();
+    var { title, content, category, image, youtube, tiktok, author } = await request.json();
     
     const titleFound = await News.findOne({ title });
 
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       image,
       youtube,
       tiktok,
-      author: "Gabriel",
+      author
     });
 
 
