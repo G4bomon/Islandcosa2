@@ -11,18 +11,18 @@ export async function POST(request: Request) {
     const { fullname, email, password } = await request.json();
 
     if (password < 6)
-      return NextResponse.json(
-        { message: "Password must be at least 6 characters" },
+      return NextResponse.json(JSON.parse(JSON.stringify(
+        { message: "Password must be at least 6 characters" })),
         { status: 400 }
       );
 
     const userFound = await User.findOne({ email });
 
     if (userFound)
-      return NextResponse.json(
+      return NextResponse.json(JSON.parse(JSON.stringify(
         {
           message: "Email already exists",
-        },
+        })),
         {
           status: 409,
         }
@@ -39,21 +39,21 @@ export async function POST(request: Request) {
     const savedUser = await user.save();
     console.log(savedUser);
 
-    return NextResponse.json(
+    return NextResponse.json(JSON.parse(JSON.stringify(
       {
         fullname,
         email,
         createdAt: savedUser.createdAt,
         updatedAt: savedUser.updatedAt,
-      },
+      })),
       { status: 201 }
     );
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
-      return NextResponse.json(
+      return NextResponse.json(JSON.parse(JSON.stringify(
         {
           message: error.message,
-        },
+        })),
         {
           status: 400,
         }

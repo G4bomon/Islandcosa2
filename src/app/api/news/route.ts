@@ -11,30 +11,30 @@ export async function POST(request: Request) {
     const titleFound = await News.findOne({ title });
 
     if (titleFound)
-      return NextResponse.json(
+      return NextResponse.json(JSON.parse(JSON.stringify(
         {
           message: "el articulo ya existe",
-        },
+        })),
         {
           status: 409,
         }
       );
 
     if (content.length  < 10)
-      return NextResponse.json(
-        { message: "El contenido debe tener al menos 50 caracteres de largo" },
+      return NextResponse.json(JSON.parse(JSON.stringify(
+        { message: "El contenido debe tener al menos 50 caracteres de largo" })),
         { status: 400 }
       );
     
     if (!category)
-      return NextResponse.json(
-        {message: "La categoria no puede estar vacia"},
+      return NextResponse.json(JSON.parse(JSON.stringify(
+        {message: "La categoria no puede estar vacia"})),
         {status: 400}
       );
      
     if (!image)
-      return NextResponse.json(
-        {message: "El articulo debe tener al menos una imagen"},
+      return NextResponse.json(JSON.parse(JSON.stringify(
+        {message: "El articulo debe tener al menos una imagen"})),
         {status: 400}
       );
 
@@ -61,16 +61,16 @@ export async function POST(request: Request) {
     const savednew = await news.save();
     console.log (savednew);
 
-    return NextResponse.json(
+    return NextResponse.json(JSON.parse(JSON.stringify(
       savednew
-    );
+    )));
     
    } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
-      return NextResponse.json(
+      return NextResponse.json(JSON.parse(JSON.stringify(
         {
           message: error.message,
-        },
+        })),
         {
           status: 400,
         }

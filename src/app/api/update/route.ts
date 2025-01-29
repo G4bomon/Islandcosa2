@@ -9,20 +9,20 @@ export async function POST(request: Request) {
       const { title, content, category, image, youtube, tiktok, _id } = await request.json();
   
       if (content.length < 10)
-        return NextResponse.json(
-          { message: "El contenido debe tener al menos 50 caracteres de largo" },
+        return NextResponse.json(JSON.parse(JSON.stringify(
+          { message: "El contenido debe tener al menos 50 caracteres de largo" })),
           { status: 400 }
         );
   
       if (!category)
-        return NextResponse.json(
-          { message: "La categoria no puede estar vacia" },
+        return NextResponse.json(JSON.parse(JSON.stringify(
+          { message: "La categoria no puede estar vacia" })),
           { status: 400 }
         );
   
       if (!image)
-        return NextResponse.json(
-          { message: "El articulo debe tener al menos una imagen" },
+        return NextResponse.json(JSON.parse(JSON.stringify(
+          { message: "El articulo debe tener al menos una imagen" })),
           { status: 400 }
         );
   
@@ -40,29 +40,29 @@ export async function POST(request: Request) {
           );
   
       if (updatedNews.modifiedCount === 0)
-        return NextResponse.json(
+        return NextResponse.json(JSON.parse(JSON.stringify(
           {
             message: "No changes were made",
-          },
+          })),
           {
             status: 304,
           }
         );
   
-      return NextResponse.json(
+      return NextResponse.json(JSON.parse(JSON.stringify(
         {
           message: "Article updated successfully",
-        },
+        })),
         {
           status: 200,
         }
       );
     } catch (error) {
       if (error instanceof mongoose.Error.ValidationError) {
-        return NextResponse.json(
+        return NextResponse.json(JSON.parse(JSON.stringify(
           {
             message: error.message,
-          },
+          })),
           {
             status: 400,
           }

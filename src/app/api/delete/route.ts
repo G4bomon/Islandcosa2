@@ -10,20 +10,20 @@ export async function POST(request: Request) {
     const deletedNews = await News.findByIdAndDelete(_id);
 
     if (!deletedNews) {
-      return NextResponse.json(
+      return NextResponse.json(JSON.parse(JSON.stringify(
         {
           message: "Article not found",
-        },
+        })),
         {
           status: 404,
         }
       );
     }
 
-    return NextResponse.json(
+    return NextResponse.json(JSON.parse(JSON.stringify(
       {
         message: "Article deleted successfully",
-      },
+      })),
       {
         status: 200,
       }
