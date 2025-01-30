@@ -3,6 +3,7 @@ import { connectDB } from "@/libs/mongodb";
 import News from "@/models/news";
 import NewsList from "@/components/NewsList";
 import TikTokCarousel from "@/components/Tiktok"; // Importamos el componente de TikTok
+import CarouselDate from "@/components/CarouselDate";
 
 async function PruebaPage() {
   await connectDB();
@@ -20,6 +21,10 @@ async function PruebaPage() {
 
       {/* Carrusel de TikToks */}
       <TikTokCarousel />
+
+      <CarouselDate newsArticles={newsArticles} />
+
+
     </div>
   );
 }

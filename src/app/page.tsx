@@ -17,7 +17,10 @@ async function HomePage() {
           <Link href={`/view/${article._id}/full`} key={article._id}>
             <div className="border p-4 rounded-lg">
               <h2 className="text-xl font-bold">{article.title}</h2>
-              <p className="text-sm text-gray-500">Author: {article.author}</p>
+              <p className="text-sm text-gray-500">Autor: {article.author}</p>
+              <p className="text-sm text-gray-400">
+                Publicado el: {new Date(article.date).toLocaleDateString("es-ES")}
+              </p>
               <Badge>{article.category}</Badge>
               <img src={article.image} alt={article.title} />
             </div>
