@@ -61,6 +61,13 @@ export async function POST(request: Request) {
     const savednew = await news.save();
     console.log (savednew);
 
+        //  NOTIFICAR A LA CAMPANA CUANDO SE CREA UN ARTÍCULO NUEVO 
+        await fetch("http://localhost:3000/api/notifications", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title }),
+        });
+
     return NextResponse.json(JSON.parse(JSON.stringify(
       savednew
     )));

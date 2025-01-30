@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import NotificationBell from "@/components/NotificationBell";
 
 function ProfilePage() {
   const { data: session } = useSession();
@@ -51,6 +52,9 @@ function ProfilePage() {
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
+      <div>
+      <NotificationBell /> {/* Agrega la campana */}
+      </div>
     </DropdownMenu>
   );
 }
