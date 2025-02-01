@@ -10,8 +10,8 @@ const page = () => {
               <Image
                 src="/img/logo-round.png"
                 alt="PreDespacho Logo"
-                width={80}
-                height={80}
+                width={90}
+                height={90}
               />
             </div>
             <div className="sm:flex sm:items-center sm:justify-between">
