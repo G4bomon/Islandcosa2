@@ -1,8 +1,11 @@
-import Image from "next/image";
-
+import Header from "@/components/Header";
 const page = () => {
   return (
-    <div>page</div>
+    <>
+    <Header/>
+
+    </>
+
   )
 }
 

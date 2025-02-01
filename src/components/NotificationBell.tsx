@@ -27,9 +27,9 @@ function NotificationBell() {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="">
       {/* Icono de campana */}
-      <button onClick={() => setMenuOpen(!menuOpen)} className="relative">
+      <button onClick={() => setMenuOpen(!menuOpen)} className="">
         🔔
         {notifications.length > 0 && (
           <span className="absolute top-0 right-0 bg-red-500 text-white text-xs px-1 rounded-full">
