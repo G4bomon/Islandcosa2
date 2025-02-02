@@ -1,10 +1,10 @@
 "use client"
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut , signIn} from "next-auth/react";
 import Link from "next/link"
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X,} from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import SearchBar from "@/components/SearchBar"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,7 +20,6 @@ const Links = () => {
 
         <>
             <div className="flex space-x-4 flex-wrap">
-
                 <Link href="#">Eventos</Link>
                 <Link href="#">Historia y Cultura</Link>
                 <Link href="#">Entretenimiento</Link>
@@ -33,8 +32,6 @@ const Links = () => {
 }
 const ProfilePage = () => {
     const { data: session } = useSession();
-
-
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -76,7 +73,7 @@ const ProfilePage = () => {
 }
 
 const Nav = () => {
-
+    const { data: session } = useSession(); // Obtiene la sesión del usuario
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleNavbar = () => {
@@ -85,25 +82,33 @@ const Nav = () => {
     return (
         <>
             <div className="flex flex-col">
-
+                {/*hay que ocultar el top-side en mobile y pasarlo al div que se muestra cuando se hace toggle */}
                 <div className="top-side flex justify-between">
-
-                    <div className="flex w-full max-w-sm items-center space-x-2">
-                        <Input type="search" placeholder="Busca opciones" />
-                        <Button type="submit">
-                            <Search />
-                        </Button>
-                    </div>
+                    <SearchBar/>
                     <div className="ml-2 flex border">
                         <NotificationBell />
                         <p className="ml-1">Notificaciones</p>
                     </div>
                     <div className="ml-2">
-                        {ProfilePage()}
+                    {session ? (
+                        // Si el usuario está logueado, muestra su perfil
+                        <ProfilePage/>
+                    ) : (
+                        // Si no está logueado, muestra el botón de login y register
+                        <div className="flex items-center">
+                            <button onClick={() => signIn()} className="px-4 py-2 border rounded">
+                                Iniciar Sesión
+                            </button>
+                            <Link 
+                                href="/register" 
+                                className="px-4 py-2 border rounded">
+                                Registrarse
+                            </Link>
+                        </div>
+                    )}
                     </div>
                 </div>
                 <div className="bottom-side">
-
                     <nav className="w-auto flex justify-end">
                         <div className="hidden w-full md:flex flex-wrap">
                             <Links />
@@ -114,13 +119,13 @@ const Nav = () => {
                             </button>
                         </div>
                     </nav>
+                    {/*este es el toggle en vista mobile clickeas el boton del menu*/}
                     {isOpen && (
                         <div className="flex flex-col basis-full md:hidden">
                             <Links />
                         </div>
                     )}
                 </div>
-
             </div>
         </>
     )
