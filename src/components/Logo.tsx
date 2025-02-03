@@ -1,7 +1,7 @@
 import Image from "next/image"
 const Logo = () => {
     return (
-        <div className="logo h-16">
+        <div className="flex h-16">
             <Image
                 src="/img/logo-round.png"
                 alt="NiceTripLogo"
