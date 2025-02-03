@@ -7,7 +7,7 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ children }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsToShow = 3; // Mostrar 3 ítems a la vez
+  const itemsToShow = Math.min(children.length, 3); // Mostrar máximo 3 a la vez
 
   const nextSlide = () => {
     if (currentIndex < children.length - itemsToShow) {
@@ -24,15 +24,17 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
   return (
     <div className="relative w-full">
       {/* Botón Anterior */}
-      <button
+      {currentIndex > 0 && (
+        <button
           className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white hover:bg-blue-700 p-3 rounded-full shadow-lg z-10"
           onClick={prevSlide}
         >
           ◀
         </button>
+      )}
 
-{/* Carrusel */}
-<div className="overflow-hidden border rounded-lg shadow-md">
+      {/* Carrusel */}
+      <div className="overflow-hidden border rounded-lg shadow-md">
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{
@@ -40,10 +42,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
           }}
         >
           {children.map((child, index) => (
-            <div
-              key={index}
-              className="w-1/3 flex-shrink-0 p-4 md:w-1/4 lg:w-1/5" // Ajuste para responsividad
-            >
+            <div key={index} className="w-1/3 flex-shrink-0 p-4">
               {child}
             </div>
           ))}

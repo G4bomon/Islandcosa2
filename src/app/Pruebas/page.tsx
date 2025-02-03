@@ -4,6 +4,7 @@ import News from "@/models/news";
 import NewsList from "@/components/NewsList";
 import TikTokCarousel from "@/components/Tiktok"; // Importamos el componente de TikTok
 import CarouselDate from "@/components/CarouselDate";
+import PlayaCarousel from "@/components/PlayaCarousel";
 
 async function PruebaPage() {
   await connectDB();
@@ -22,7 +23,11 @@ async function PruebaPage() {
       {/* Carrusel de TikToks */}
       <TikTokCarousel />
 
+      {/* Carousel con filtro de fechas */}
       <CarouselDate newsArticles={newsArticles} />
+
+      {/* Carousel con filtro de fechas */}
+      <PlayaCarousel newsArticles={newsArticles} />
 
 
     </div>

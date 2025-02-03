@@ -1,12 +1,13 @@
-// NewsList.tsx
 "use client";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import Carousel from "@/components/Carousel";
+import { useRouter } from "next/navigation";
 
 const NewsList: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
   const [categoryFilter, setCategoryFilter] = useState<string>("All");
+  const router = useRouter();
 
   // Obtener las categorías únicas
   const categories = ["All", ...new Set(newsArticles.map((article) => article.category))];
@@ -16,6 +17,9 @@ const NewsList: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
     categoryFilter === "All"
       ? newsArticles
       : newsArticles.filter((article) => article.category === categoryFilter);
+
+  // Limitar a un máximo de 10 elementos en el carrusel
+  const carouselArticles = filteredArticles.slice(0, 10);
 
   return (
     <div className="pt-8">
@@ -38,7 +42,7 @@ const NewsList: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
 
       {/* Carrusel de noticias */}
       <Carousel>
-        {filteredArticles.map((article) => (
+        {carouselArticles.map((article) => (
           <Link href={`/view/${article._id}/full`} key={article._id}>
             <div className="border p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
               <h2 className="text-xl font-semibold text-blue-600">{article.title}</h2>
@@ -56,6 +60,18 @@ const NewsList: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
           </Link>
         ))}
       </Carousel>
+
+      {/* Botón "Ver más" */}
+      {filteredArticles.length > 10 && (
+        <div className="text-center mt-4">
+          <button
+            onClick={() => router.push(`/?category=${categoryFilter}`)}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Ver más
+          </button>
+        </div>
+      )}
     </div>
   );
 };
