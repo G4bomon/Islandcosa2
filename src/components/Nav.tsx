@@ -19,13 +19,14 @@ const Links = () => {
     return (
 
         <>
-            <div className="flex flex-wrap flex-col md:flex-row md:space-x-4">
-                <Link href="#" className="my-1 text-sm">Playa</Link>
-                <Link href="#" className="my-1 text-sm">Hoteles</Link>
-                <Link href="#" className="my-1 text-sm">Actividades</Link>
-                <Link href="#" className="my-1 text-sm">Fiesta</Link>
-                <Link href="#" className="my-1 text-sm">Comida</Link>
-                <Link href="#" className="my-1 text-sm">Arte y Cultura</Link>
+            <div className="flex flex-wrap flex-col md:flex-row">
+                <Link href="#" className="my-1 md:my-0 font-medium md:px-4 md:py-2 md:border-r border-amber-400 md:hover:bg-amber-400 md:hover:rounded-t-lg last:border-r-0">Playa</Link>
+                <Link href="#" className="my-1 md:my-0 font-medium md:px-4 md:py-2 md:border-r border-amber-400 md:hover:bg-amber-400 md:hover:rounded-t-lg last:border-r-0">Hoteles</Link>
+                <Link href="#" className="my-1 md:my-0 font-medium md:px-4 md:py-2 md:border-r border-amber-400 md:hover:bg-amber-400 md:hover:rounded-t-lg last:border-r-0">Actividades</Link>
+                <Link href="#" className="my-1 md:my-0 font-medium md:px-4 md:py-2 md:border-r border-amber-400 md:hover:bg-amber-400 md:hover:rounded-t-lg last:border-r-0">Fiesta</Link>
+                <Link href="#" className="my-1 md:my-0 font-medium md:px-4 md:py-2 md:border-r border-amber-400 md:hover:bg-amber-400 md:hover:rounded-t-lg last:border-r-0">Comida</Link>
+                <Link href="#" className="my-1 md:my-0 font-medium md:px-4 md:py-2 md:border-r border-amber-400 md:hover:bg-amber-400 md:hover:rounded-t-lg last:border-r-0">Arte y Cultura</Link>
+                <Link href="#" className="my-1 md:my-0 font-medium md:px-4 md:py-2 md:border-r border-amber-400 md:hover:bg-amber-400 md:hover:rounded-t-lg last:border-r-0">Más...</Link>
             </div>
         </>
     )
@@ -95,81 +96,91 @@ const Nav = () => {
                         </div>
                     )}*/}
 
-            {/* */}
-            <div className="flex flex-col items-center justify-center md:hidden">
+            {/*vista mobile*/}
+            <div className="flex flex-col items-center md:hidden">
                 <button onClick={toggleNavbar} className="p-2">
                     {isOpen ? <X size={32} /> : <Menu size={32} />}
                 </button>
-                {isOpen && (
-                    <div className="flex flex-col md:hidden">
-                        <div className="top-side flex flex-col justify-between">
-                            <SearchBar />
-                            <div className="ml-2 inline-flex items-center border max-w-max">
-                                <NotificationBell />
-                                <p className="ml-1 text-sm">Notificaciones</p>
-                                <div className="ml-2">
-                                    {session ? (
-                                        <ProfilePage />
-                                    ) : (
-                                        <div className="flex items-center space-x-2">
-                                            <button
-                                                onClick={() => signIn()}
-                                                className="px-4 py-2 border rounded text-sm"
-                                            >
-                                                Iniciar Sesión
-                                            </button>
-                                            <Link
-                                                href="/register"
-                                                className="px-4 py-2 border rounded text-sm"
-                                            >
-                                                Registrarse
-                                            </Link>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bottom-side">
-                            <nav className="w-auto flex justify-end">
-                                <div className="w-full">
-                                    <Links/>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                )}
             </div>
+            {isOpen && (
+                <div className="flex flex-col md:hidden w-full mb-2 p-2">
+                    <div className="top-side flex flex-col justify-between">
+                        <div className="my-2">
+                            <SearchBar />
+                        </div>
+                        <div className="inline-flex items-center flex-wrap my-2 w-full justify-between border-b-2">
+                            <div className="flex w-full mb-1">
+                                {session ? (
+                                    <div className="inline-flex w-full">
+                                        <div>
+                                            <NotificationBell />
+                                            <p className="text-sm">Notificaciones</p>
+                                        </div>
+                                        <div className="mx-2">
 
-            {/*este div tiene que ir oculto en mobile y ser cambiado por el div del boton menu,
-            al ser clickeado pues muestra los 2 divs internos que tiene */}
-            <div className="hidden md:flex flex-col">
-                <div className="top-side flex justify-between">
-                    <SearchBar />
-                    <div className="ml-2 flex border">
-                        <NotificationBell />
-                        <p className="ml-1">Notificaciones</p>
-                    </div>
-                    <div className="ml-2">
-                        {session ? (
-                            // Si el usuario está logueado, muestra su perfil
-                            <ProfilePage />
-                        ) : (
-                            // Si no está logueado, muestra el botón de login y register
-                            <div className="flex items-center">
-                                <button onClick={() => signIn()} className="px-4 py-2 border rounded">
-                                    Iniciar Sesión
-                                </button>
-                                <Link
-                                    href="/register"
-                                    className="px-4 py-2 border rounded">
-                                    Registrarse
-                                </Link>
+                                            <ProfilePage />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center">
+                                        <button
+                                            onClick={() => signIn()}
+                                            className="px-4 py-2 border rounded text-sm"
+                                        >
+                                            Iniciar Sesión
+                                        </button>
+                                        <Link
+                                            href="/register"
+                                            className="px-4 py-2 border rounded text-sm"
+                                        >
+                                            Registrarse
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
-                        )}
+                        </div>
+
+                    </div>
+                    <div className="bottom-side">
+                        <nav className="w-auto flex justify-end">
+                            <div className="w-full">
+                                <Links />
+                            </div>
+                        </nav>
                     </div>
                 </div>
-                <div className="bottom-side">
-                    <nav className="w-auto flex justify-end">
+            )}
+
+            {/*vista desktop*/}
+            {/*este div tiene que ir oculto en mobile*/}
+            <div className="hidden md:flex flex-col grow">
+                <div className="top-side flex flex-auto justify-between w-full my-2">
+                    <SearchBar />
+                    <div className="ml-2 flex border rounded-lg">
+                        <NotificationBell />
+                        <p className="ml-1">Notificaciones</p>
+                        <div className="ml-2">
+                            {session ? (
+                                // Si el usuario está logueado, muestra su perfil
+                                <ProfilePage />
+                            ) : (
+                                // Si no está logueado, muestra el botón de login y register
+                                <div className="flex items-center border ">
+                                    <button onClick={() => signIn()} className="px-4 py-2 border rounded-lg">
+                                        Iniciar Sesión
+                                    </button>
+                                    <Link
+                                        href="/register"
+                                        className="px-4 py-2 border rounded-lg">
+                                        Registrarse
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div className="bottom-side mx-2">
+                    <nav className="">
                         <div className="w-full flex flex-wrap">
                             <Links />
                         </div>

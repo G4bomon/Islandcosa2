@@ -5,8 +5,8 @@ import { Search } from "lucide-react"
 const SearchBar = () => {
     return (
         <div className="flex w-full max-w-sm items-center space-x-2">
-            <Input type="search" placeholder="Busca opciones" />
-            <Button type="submit">
+            <Input type="search" placeholder="Busca opciones" className="rounded-3xl"/>
+            <Button type="submit" size="sm" className="rounded-full">
                 <Search />
             </Button>
         </div>
