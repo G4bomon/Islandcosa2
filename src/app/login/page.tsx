@@ -7,25 +7,23 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import ReCAPTCHA from "react-google-recaptcha";
+import GameCaptcha from "@/components/GameCaptcha"; // Ajusta la ruta
 
 function Signin() {
-  const [loginAttempt, setLoginAttempt] = useState(0); // 0: no ha intentado, 1: intento fallido
+  const [loginAttempt, setLoginAttempt] = useState(0);
   const [error, setError] = useState("");
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null); // Store the captcha token
+  const [captchaSolved, setCaptchaSolved] = useState(false); // Nuevo estado para el captcha
   const router = useRouter();
-
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaToken(token);
-  };
+  
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoginAttempt(loginAttempt + 1); // Incrementa el contador de intentos
+    setLoginAttempt(loginAttempt + 1);
 
-    if (!captchaToken) {
-      setError("Por favor, completa el reCAPTCHA.");
-      return; // Stop submission if captcha is not verified
+    if (!captchaSolved && loginAttempt > 0) {
+      // Verifica si el captcha fue resuelto
+      setError("Por favor, completa el CAPTCHA.");
+      return;
     }
 
     const formData = new FormData(event.currentTarget);
@@ -49,8 +47,8 @@ function Signin() {
 
     if (res?.ok) {
       router.push("/dashboard/profile");
-      setCaptchaToken(null); // Restablece el token del captcha
-      setLoginAttempt(0); // Restablece el contador de intentos
+      setCaptchaSolved(false); // Restablece el estado del captcha
+      setLoginAttempt(0);
     }
   }
 
@@ -64,6 +62,16 @@ function Signin() {
   useEffect(() => {
     localStorage.setItem("loginAttempt", loginAttempt.toString());
   }, [loginAttempt]);
+
+  const handleCaptchaSolved = () => {
+    setCaptchaSolved(true);
+    setError(""); // Limpia el error del captcha si se resolvió
+  };
+
+  const handleCaptchaFailed = () => {
+    setCaptchaSolved(false);
+    setError("Captcha incorrecto. Inténtalo de nuevo."); // Muestra un mensaje de error
+  };
 
   return (
     <div className="mt-10 flex flex-col w-11/12 max-w-lg md:w-11/12 mx-auto shadow-lg rounded-lg">
@@ -117,11 +125,11 @@ function Signin() {
             </div>
           )}
 
-          {loginAttempt > 0 && ( // Muestra el reCAPTCHA solo si hay un intento fallido
+          {loginAttempt > 0 && (
             <div className="mb-4">
-              <ReCAPTCHA
-                sitekey="6Le3Gs4qAAAAAGhdOpHOIxJFhnV1f85ezIGCojgh"
-                onChange={handleCaptchaChange}
+              <GameCaptcha
+                onSolved={handleCaptchaSolved}
+                onFailed={handleCaptchaFailed}
               />
             </div>
           )}
