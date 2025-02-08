@@ -52,7 +52,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
       {/* Botón Siguiente */}
       {currentIndex < children.length - itemsToShow && (
         <button
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white hover:bg-blue-700 p-3 rounded-full shadow-lg z-10"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-amber-400 text-white hover:bg-blue-700 p-3 rounded-full shadow-lg z-10"
           onClick={nextSlide}
         >
           ▶

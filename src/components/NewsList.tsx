@@ -24,20 +24,24 @@ const NewsList: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
   return (
     <div className="pt-8">
       {/* Botones para las categorías */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setCategoryFilter(category)}
-            className={`px-4 py-2 rounded ${
-              categoryFilter === category
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
-          >
-            {category}
-          </button>
-        ))}
+      <div className="mb-4 flex flex-col gap-2">
+        <h2 className="font-semibold text-2xl pl-4 pb-2">
+          Descubra más cosas que hacer
+        </h2>
+        <div className="flex gap-3 flex-wrap">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setCategoryFilter(category)}
+              className={`px-4 py-2 rounded-xl ${categoryFilter === category
+                  ? "bg-amber-400 text-black font-medium"
+                  : "bg-gray-200 text-black font-medium hover:bg-gray-300"
+                }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Carrusel de noticias */}
@@ -45,9 +49,6 @@ const NewsList: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
         {carouselArticles.map((article) => (
           <Link href={`/view/${article._id}/full`} key={article._id}>
             <div className="border p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
-              <h2 className="text-xl font-semibold text-blue-600">{article.title}</h2>
-              <p className="text-sm text-gray-500">Autor: {article.author || "Desconocido"}</p>
-              <Badge className="mt-2">{article.category}</Badge>
               {article.image && (
                 <img
                   src={article.image}
@@ -56,6 +57,10 @@ const NewsList: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
                   loading="lazy"
                 />
               )}
+              <Badge className="mt-2">{article.category}</Badge>
+              <h2 className="text-xl font-semibold text-blue-600">{article.title}</h2>
+              <p className="text-sm text-gray-500">Autor: {article.author || "Desconocido"}</p>
+              <p className="text-sm text-gray-500">{article.content || "No se añadió una descripción"}</p>
             </div>
           </Link>
         ))}
