@@ -53,7 +53,7 @@ const NewsList: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
                 <img
                   src={article.image}
                   alt={article.title}
-                  className="w-full h-64 object-cover my-4"
+                  className="w-full h-64 object-cover"
                   loading="lazy"
                 />
               )}

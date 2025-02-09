@@ -62,7 +62,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
           style={{ transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)` }}
         >
           {children.map((child, index) => (
-            <div key={index} className="w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 p-4 pt-0">
+            <div key={index} className="w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 p-4">
               {child}
             </div>
           ))}

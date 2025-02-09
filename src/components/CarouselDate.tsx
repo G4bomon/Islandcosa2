@@ -19,28 +19,24 @@ const CarouselDate: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
 
   return (
     <div className="pt-8">
-      {/* Título visible "Agregado recientemente" */}
-      <h2 className="text-2xl font-bold text-blue-600 mb-4">Agregado recientemente</h2>
-
-      {/* Carrusel de artículos recientes */}
+      <h2 className="text-3xl font-semibold text-black mb-4">Agregado recientemente</h2>
       <Carousel>
         {recentArticles.map((article) => (
           <Link href={`/view/${article._id}/full`} key={article._id}>
-            <div className="border p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
-              <h3 className="text-xl font-semibold text-blue-600">{article.title}</h3>
-              <p className="text-sm text-gray-500">Autor: {article.author || "Desconocido"}</p>
-              <p className="text-sm text-gray-400">
-                Publicado el: {new Date(article.date).toLocaleDateString("es-ES")}
-              </p>
-              <Badge className="mt-2">{article.category}</Badge>
+            <div className="pb-4 hover:shadow-2xl transition duration-300 transform hover:scale-105">
               {article.image && (
                 <img
                   src={article.image}
                   alt={article.title}
-                  className="w-full h-64 object-cover mt-4 rounded-lg"
+                  className="w-full h-64 object-cover "
                   loading="lazy"
                 />
               )}
+              <h3 className="text-lg font-semibold text-black text-center">{article.title}</h3>
+              <p className="text-xs text-gray-400 text-center">
+                Publicado el: {new Date(article.date).toLocaleDateString("es-ES")}
+              </p>
+
             </div>
           </Link>
         ))}
