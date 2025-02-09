@@ -11,39 +11,17 @@ import NotificationBell from "@/components/NotificationBell";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const Links = () => (
-  <div className="flex flex-wrap flex-col md:flex-row gap-2">
-    {[
-      "Playa",
-      "Hoteles",
-      "Actividades",
-      "Fiesta",
-      "Comida",
-      "Arte y Cultura",
-      "Más...",
-    ].map((link) => (
-      <Link
-        key={link}
-        href="#"
-        className="my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0"
-      >
-        {link}
-      </Link>
-    ))}
-  </div>
-);
-
 const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
   const [categoryFilter, setCategoryFilter] = useState<string>("All");
   const [showCards, setShowCards] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -52,13 +30,18 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
     ...new Set(newsArticles.map((article) => article.category)),
   ];
 
-  const filteredArticles =
-    categoryFilter === "All"
-      ? newsArticles
-      : newsArticles.filter((article) => article.category === categoryFilter);
+  const filteredArticles = newsArticles.filter((article) => {
+    const matchesCategory =
+      categoryFilter === "All" || article.category === categoryFilter;
+    const matchesSearch =
+      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.author?.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   const handleHomeButtonClick = () => {
     setCategoryFilter("All");
+    setSearchQuery("");
     setShowCards(false);
   };
 
@@ -67,17 +50,92 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
   return (
     <>
       {/* Barra de navegación con categorías */}
-      <div className="flex flex-col items-center md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg z-10">
+      <div className="pt-8 mb-4 flex flex-wrap gap-2">
+        <Link
+          href="#"
+          onClick={handleHomeButtonClick}
+          className="my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0"
+        >
+          Inicio
+        </Link>
+        {categories.map((category) => (
+          <Link
+            key={category}
+            href="#"
+            onClick={() => {
+              setCategoryFilter(category);
+              setShowCards(true);
+            }}
+            className={`my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0 ${
+              categoryFilter === category
+                ? "text-amber-600 font-bold"
+                : "text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            {category}
+          </Link>
+        ))}
+      </div>
+
+      {/* Mostrar los artículos filtrados */}
+      {showCards && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filteredArticles.map((article) => (
+            <Link href={`/view/${article._id}/full`} key={article._id}>
+              <div className="border p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 bg-white">
+                <h2 className="text-xl font-semibold text-amber-600 truncate">
+                  {article.title}
+                </h2>
+                <p className="text-sm text-gray-500">
+                  Autor: {article.author || "Desconocido"}
+                </p>
+                <Badge className="mt-2 bg-amber-400 text-white">
+                  {article.category}
+                </Badge>
+                {article.image && (
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-48 object-cover mt-4 rounded-lg"
+                    loading="lazy"
+                  />
+                )}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {/* Botón "Ver más" si hay más artículos */}
+      {filteredArticles.length > 10 && showCards && (
+        <div className="text-center mt-4">
+          <button
+            onClick={() => router.push(`/?category=${categoryFilter}`)}
+            className="px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition"
+          >
+            Ver más
+          </button>
+        </div>
+      )}
+
+      {/* Barra de navegación móvil */}
+      <div className="flex flex-col items-center md:hidden">
         <button onClick={toggleNavbar} className="p-2">
           {isOpen ? <X size={32} /> : <Menu size={32} />}
         </button>
       </div>
 
       {isOpen && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-10 p-2">
+        <div className="flex flex-col md:hidden w-full mb-2 p-2">
           <div className="flex flex-col justify-between">
             <div className="my-2">
-              <SearchBar />
+              <SearchBar
+                searchQuery={searchQuery}
+                onSearchChange={(e) => {
+                  setSearchQuery(e.target.value); // Actualiza el estado de la búsqueda
+                  setShowCards(true); // Si deseas mostrar los resultados filtrados inmediatamente
+                }}
+              />
             </div>
             <div className="inline-flex items-center flex-wrap my-2 w-full justify-between border-b-2">
               <div className="flex w-full mb-1">
@@ -125,16 +183,19 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
               </div>
             </div>
           </div>
-          <div className="bottom-side">
-            <Links />
-          </div>
         </div>
       )}
 
       {/* Barra de navegación desktop */}
       <div className="hidden md:flex flex-col grow">
         <div className="top-side flex flex-auto justify-between w-full my-2">
-          <SearchBar />
+          <SearchBar
+            searchQuery={searchQuery}
+            onSearchChange={(e) => {
+              setSearchQuery(e.target.value); // Actualiza el estado de la búsqueda
+              setShowCards(true); // Si deseas mostrar los resultados filtrados inmediatamente
+            }}
+          />
           <div className="ml-2 flex border rounded-lg">
             <NotificationBell />
             <p className="ml-1">Notificaciones</p>
@@ -174,9 +235,6 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
               )}
             </div>
           </div>
-        </div>
-        <div className="bottom-side mx-2">
-          <Links />
         </div>
       </div>
     </>
