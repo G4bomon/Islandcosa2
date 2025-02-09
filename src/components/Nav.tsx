@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SearchBar from "@/components/SearchBar";
-import NotificationBell from "@/components/NotificationBell";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -142,7 +141,6 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                 {session ? (
                   <div className="inline-flex w-full">
                     <div>
-                      <NotificationBell />
                       <p className="text-sm">Notificaciones</p>
                     </div>
                     <div className="mx-2">
@@ -197,7 +195,6 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
             }}
           />
           <div className="ml-2 flex border rounded-lg">
-            <NotificationBell />
             <p className="ml-1">Notificaciones</p>
             <div className="ml-2">
               {session ? (

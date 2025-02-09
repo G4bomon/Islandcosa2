@@ -5,51 +5,29 @@ import Link from "next/link";
 import Carousel from "@/components/Carousel";
 
 const CarouselDate: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
-  const [dateFilter, setDateFilter] = useState<string>("All");
-
-  // Función para filtrar noticias por fecha
-  const getFilteredArticles = () => {
+  // Filtrar artículos de los últimos 7 días
+  const getRecentArticles = () => {
     const now = new Date();
     return newsArticles.filter((article) => {
       const articleDate = new Date(article.date);
-
-      if (dateFilter === "Last 7 Days") {
-        return (now.getTime() - articleDate.getTime()) / (1000 * 60 * 60 * 24) <= 7;
-      } 
-      if (dateFilter === "Last Month") {
-        return now.getMonth() === articleDate.getMonth() && now.getFullYear() === articleDate.getFullYear();
-      }
-      return true; // "All" -> Mostrar todas
+      // Comparar si la fecha del artículo es dentro de los últimos 7 días
+      return (now.getTime() - articleDate.getTime()) / (1000 * 60 * 60 * 24) <= 7;
     });
   };
 
-  const filteredArticles = getFilteredArticles();
+  const recentArticles = getRecentArticles();
 
   return (
     <div className="pt-8">
-      {/* Botones de filtro por fecha */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        {["All", "Last 7 Days", "Last Month"].map((filter) => (
-          <button
-            key={filter}
-            onClick={() => setDateFilter(filter)}
-            className={`px-4 py-2 rounded ${
-              dateFilter === filter
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
-          >
-            {filter}
-          </button>
-        ))}
-      </div>
+      {/* Título visible "Agregado recientemente" */}
+      <h2 className="text-2xl font-bold text-blue-600 mb-4">Agregado recientemente</h2>
 
-      {/* Carrusel filtrado */}
+      {/* Carrusel de artículos recientes */}
       <Carousel>
-        {filteredArticles.map((article) => (
+        {recentArticles.map((article) => (
           <Link href={`/view/${article._id}/full`} key={article._id}>
             <div className="border p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105">
-              <h2 className="text-xl font-semibold text-blue-600">{article.title}</h2>
+              <h3 className="text-xl font-semibold text-blue-600">{article.title}</h3>
               <p className="text-sm text-gray-500">Autor: {article.author || "Desconocido"}</p>
               <p className="text-sm text-gray-400">
                 Publicado el: {new Date(article.date).toLocaleDateString("es-ES")}

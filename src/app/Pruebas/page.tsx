@@ -1,40 +1,38 @@
-// app/Prueba/page.tsx
 import { connectDB } from "@/libs/mongodb";
 import News from "@/models/news";
 import NewsList from "@/components/NewsList";
 import TikTokCarousel from "@/components/Tiktok";
 import CarouselDate from "@/components/CarouselDate";
 import PlayaCarousel from "@/components/PlayaCarousel";
-import Navbar2 from "@/components/Navbar2";
+import Notifications from "@/components/Notifications";
 
 async function PruebaPage() {
   await connectDB();
 
-  // Get all news from database and convert to plain objects
+  // Obtener todas las noticias de la base de datos y convertirlas en objetos planos
   const newsData = await News.find({});
-  // Convert Mongoose documents to plain JavaScript objects
   const newsArticles = newsData.map(doc => JSON.parse(JSON.stringify(doc)));
+
+  // Seleccionar los últimos 3 artículos
+  const lastThreeArticles = newsArticles.slice(-3).map(article => ({
+    id: article._id,
+    title: article.title,
+    articleId: article._id
+  }));
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Prueba - Filtro de Noticias</h1>
       <p className="text-gray-600 mb-6">Bienvenido a NiceTrip</p>
 
-      <Navbar2 newsArticles={newsArticles} />
+      {/* Pasar los tres últimos artículos a Notifications */}
+      <Notifications newArticles={lastThreeArticles} />
 
-      {/* Pass the converted plain objects to components */}
+      {/* Los otros componentes */}
       <NewsList newsArticles={newsArticles} />
-
-      {/* Carrusel de TikToks */}
       <TikTokCarousel />
-
-      {/* Carousel con filtro de fechas */}
       <CarouselDate newsArticles={newsArticles} />
-
-      {/* Carousel con filtro de fechas */}
       <PlayaCarousel newsArticles={newsArticles} />
-
-
     </div>
   );
 }
