@@ -19,7 +19,8 @@ const TikTokCarousel: React.FC = async () => {
     }));
 
   return (
-    <div className="pt-8">
+    <div className="m-4 border-2 shadow-xl bg-[rgba(221,234,255,0.5)]">
+      <h3 className="text-3xl font-semibold text-black pl-8 mt-4">La Guaira en clips</h3>
       {/* Carrusel de TikToks */}
       <Carousel>
         {tiktokClipsData.map((clip) => (

@@ -10,6 +10,7 @@ const TikTokEmbed: React.FC<TikTokEmbedProps> = ({ url }) => {
   return (
     <iframe
       src={iframeUrl}
+      loading="lazy"
       frameBorder="0"
       allowFullScreen
       width="100%"

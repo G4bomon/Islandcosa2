@@ -8,14 +8,18 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ children }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [itemsToShow, setItemsToShow] = useState(3); // Default en desktop
+  const [itemsToShow, setItemsToShow] = useState(4); // Default en desktop
 
   useEffect(() => {
     const updateItemsToShow = () => {
       if (window.innerWidth < 768) {
         setItemsToShow(Math.min(children.length, 2)); // En móviles, mostrar 2
-      } else {
-        setItemsToShow(Math.min(children.length, 3)); // En desktop, mostrar 3
+      } else if (window.innerWidth >= 768 && window.innerWidth < 900)
+        {
+          setItemsToShow(Math.min(children.length, 3)); // Entre 768px y 899px, mostrar 3
+        }
+      else {
+        setItemsToShow(Math.min(children.length, 4)); // En desktop +900, mostrar 4
       }
     };
 
@@ -58,7 +62,7 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
           style={{ transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)` }}
         >
           {children.map((child, index) => (
-            <div key={index} className="md:w-1/3 w-1/2 w- flex-shrink-0 p-4">
+            <div key={index} className="w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 p-4 pt-0">
               {child}
             </div>
           ))}
