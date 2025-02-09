@@ -5,6 +5,7 @@ import NewsList from "@/components/NewsList";
 import TikTokCarousel from "@/components/Tiktok";
 import CarouselDate from "@/components/CarouselDate";
 import PlayaCarousel from "@/components/PlayaCarousel";
+import Navbar2 from "@/components/Navbar2";
 
 async function PruebaPage() {
   await connectDB();
@@ -18,6 +19,8 @@ async function PruebaPage() {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Prueba - Filtro de Noticias</h1>
       <p className="text-gray-600 mb-6">Bienvenido a NiceTrip</p>
+
+      <Navbar2 newsArticles={newsArticles} />
 
       {/* Pass the converted plain objects to components */}
       <NewsList newsArticles={newsArticles} />

@@ -40,7 +40,7 @@ const Links = () => (
   </div>
 );
 
-const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
+const Navbar2 = ({ newsArticles }: { newsArticles: any[] }) => {
   const [categoryFilter, setCategoryFilter] = useState<string>("All");
   const [showCards, setShowCards] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -67,14 +67,81 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
   return (
     <>
       {/* Barra de navegación con categorías */}
-      <div className="flex flex-col items-center md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg z-10">
+      <div className="pt-8 mb-4 flex flex-wrap gap-2">
+  <Link
+    href="#"
+    onClick={handleHomeButtonClick}
+    className="my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0"
+  >
+    Inicio
+  </Link>
+  {categories.map((category) => (
+    <Link
+      key={category}
+      href="#"
+      onClick={() => {
+        setCategoryFilter(category);
+        setShowCards(true);
+      }}
+      className={`my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0 ${
+        categoryFilter === category
+          ? "text-amber-600 font-bold" // Estilo para el enlace activo
+          : "text-gray-700 hover:bg-gray-200" // Estilo para enlaces inactivos y hover
+      }`}
+    >
+      {category}
+    </Link>
+  ))}
+</div>
+
+      {/* Mostrar los artículos filtrados */}
+      {showCards && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filteredArticles.map((article) => (
+            <Link href={`/view/${article._id}/full`} key={article._id}>
+              <div className="border p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 bg-white">
+                <h2 className="text-xl font-semibold text-blue-600 truncate">
+                  {article.title}
+                </h2>
+                <p className="text-sm text-gray-500">
+                  Autor: {article.author || "Desconocido"}
+                </p>
+                <Badge className="mt-2">{article.category}</Badge>
+                {article.image && (
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-48 object-cover mt-4 rounded-lg"
+                    loading="lazy"
+                  />
+                )}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {/* Botón "Ver más" si hay más artículos */}
+      {filteredArticles.length > 10 && showCards && (
+        <div className="text-center mt-4">
+          <button
+            onClick={() => router.push(`/?category=${categoryFilter}`)}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Ver más
+          </button>
+        </div>
+      )}
+
+      {/* Barra de navegación móvil */}
+      <div className="flex flex-col items-center md:hidden">
         <button onClick={toggleNavbar} className="p-2">
           {isOpen ? <X size={32} /> : <Menu size={32} />}
         </button>
       </div>
 
       {isOpen && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-10 p-2">
+        <div className="flex flex-col md:hidden w-full mb-2 p-2">
           <div className="flex flex-col justify-between">
             <div className="my-2">
               <SearchBar />
@@ -183,4 +250,4 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
   );
 };
 
-export default Nav;
+export default Navbar2;
