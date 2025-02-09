@@ -19,20 +19,20 @@ const CarouselDate: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
 
   return (
     <div className="pt-8">
-      <h2 className="text-3xl font-semibold text-black mb-4">Agregado recientemente</h2>
+      <h2 className="text-3xl font-semibold text-black mb-4 pl-4">Agregado recientemente</h2>
       <Carousel>
         {recentArticles.map((article) => (
           <Link href={`/view/${article._id}/full`} key={article._id}>
-            <div className="pb-4 hover:shadow-2xl transition duration-300 transform hover:scale-105">
+            <div className="pb-4 hover:shadow-2xl transition duration-300 transform hover:scale-105 rounded">
               {article.image && (
                 <img
                   src={article.image}
                   alt={article.title}
-                  className="w-full h-64 object-cover "
+                  className="w-full h-64 object-cover rounded"
                   loading="lazy"
                 />
               )}
-              <h3 className="text-lg font-semibold text-black text-center">{article.title}</h3>
+              <h3 className="text-lg font-semibold text-black text-center px-2">{article.title}</h3>
               <p className="text-xs text-gray-400 text-center">
                 Publicado el: {new Date(article.date).toLocaleDateString("es-ES")}
               </p>
