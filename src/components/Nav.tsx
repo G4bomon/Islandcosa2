@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession, signOut, signIn } from "next-auth/react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SearchBar from "@/components/SearchBar";
 import {
@@ -21,8 +21,16 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
   const [showCards, setShowCards] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [notifications, setNotifications] = useState<any[]>([]);
   const router = useRouter();
   const { data: session } = useSession();
+
+  useEffect(() => {
+    // Simulación de notificaciones, reemplaza con tu lógica de obtención de datos
+    if (newsArticles.length > 0) {
+      setNotifications(newsArticles.slice(-3));
+    }
+  }, [newsArticles]);
 
   const categories = [
     "All",
@@ -131,17 +139,39 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
               <SearchBar
                 searchQuery={searchQuery}
                 onSearchChange={(e) => {
-                  setSearchQuery(e.target.value); // Actualiza el estado de la búsqueda
-                  setShowCards(true); // Si deseas mostrar los resultados filtrados inmediatamente
+                  setSearchQuery(e.target.value);
+                  setShowCards(true);
                 }}
               />
             </div>
             <div className="inline-flex items-center flex-wrap my-2 w-full justify-between border-b-2">
               <div className="flex w-full mb-1">
                 {session ? (
-                  <div className="inline-flex w-full">
+                  <div className="inline-flex w-full justify-between items-center">
                     <div>
-                      <p className="text-sm">Notificaciones</p>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline">
+                            <Bell size={20} />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56">
+                          <DropdownMenuLabel>Notificaciones</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          {notifications.length > 0 ? (
+                            notifications.map((notif) => (
+                              <DropdownMenuItem
+                                key={notif._id}
+                                onClick={() => router.push(`/view/${notif._id}/full`)}
+                              >
+                                {notif.title}
+                              </DropdownMenuItem>
+                            ))
+                          ) : (
+                            <DropdownMenuItem>No hay notificaciones</DropdownMenuItem>
+                          )}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                     <div className="mx-2">
                       <DropdownMenu>
@@ -190,13 +220,43 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
           <SearchBar
             searchQuery={searchQuery}
             onSearchChange={(e) => {
-              setSearchQuery(e.target.value); // Actualiza el estado de la búsqueda
-              setShowCards(true); // Si deseas mostrar los resultados filtrados inmediatamente
+              setSearchQuery(e.target.value);
+              setShowCards(true);
             }}
           />
-          <div className="ml-2 flex border rounded-lg">
-            <p className="ml-1">Notificaciones</p>
-            <div className="ml-2">
+          <div className="ml-2 flex items-center">
+            {session && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="relative">
+                    <Bell size={20} />
+                    {notifications.length > 0 && (
+                      <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                        {notifications.length}
+                      </span>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>Notificaciones</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {notifications.length > 0 ? (
+                    notifications.map((notif) => (
+                      <DropdownMenuItem
+                        key={notif._id}
+                        onClick={() => router.push(`/view/${notif._id}/full`)}
+                      >
+                        {notif.title}
+                      </DropdownMenuItem>
+                    ))
+                  ) : (
+                    <DropdownMenuItem>No hay notificaciones</DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+
+            <div className="ml-4">
               {session ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -215,7 +275,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <div className="flex items-center border ">
+                <div className="flex items-center">
                   <button
                     onClick={() => signIn()}
                     className="px-4 py-2 border rounded-lg"
