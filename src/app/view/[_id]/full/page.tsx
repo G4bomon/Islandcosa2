@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useNewsStore } from "@/app/store";
 import TikTokEmbed from "@/components/TikTokEmbed";
 import { use } from 'react';
+import { useSession } from "next-auth/react";
 
 interface Props {
   params: Promise<{ _id: string }>;
@@ -17,6 +18,7 @@ function Fullarticle({ params }: Props) {
   const resolvedParams = use(params);
   const [isLoading, setIsLoading] = useState(true);
   const { setArticle, id, title, content, category, author, image, youtube, tiktok } = useNewsStore();
+  const { data: session } = useSession();
 
   useEffect(() => {
     async function loadArticle() {
@@ -110,7 +112,8 @@ function Fullarticle({ params }: Props) {
       )}
 
       {/* Botones de Editar y Eliminar */}
-      <div className="flex justify-between items-center mt-6">
+      {session && session.user?.admin ? (
+        <div className="flex justify-between items-center mt-6">
         <Link href={`/view/${id}/edit`}>
           <Button className="bg-blue-500 hover:bg-blue-600 text-white shadow-md py-2 px-4 rounded-lg">
             Editar
@@ -118,6 +121,8 @@ function Fullarticle({ params }: Props) {
         </Link>
         <Deletebutton articleId={id} />
       </div>
+      ) : null}
+      
     </div>
   );
 }
