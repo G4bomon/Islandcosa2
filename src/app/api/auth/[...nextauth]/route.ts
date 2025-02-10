@@ -42,14 +42,21 @@ const handler = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.user = user;
+      if (user) {
+        token.user = {
+          email: user.email,
+          fullname: (user as any).fullname, // Aseguramos que fullname está disponible
+          admin: (user as any).admin, // Aseguramos que admin está disponible
+        };
+      }
       return token;
     },
     async session({ session, token }) {
-      session.user = token.user as any;
+      session.user = token.user as any; // Forzar el tipo correcto
       return session;
     },
   },
+  
 });
 
 export { handler as GET, handler as POST };
