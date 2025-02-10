@@ -12,16 +12,17 @@ import GameCaptcha from "@/components/GameCaptcha"; // Ajusta la ruta
 function Signin() {
   const [loginAttempt, setLoginAttempt] = useState(0);
   const [error, setError] = useState("");
-  const [captchaSolved, setCaptchaSolved] = useState(false); // Nuevo estado para el captcha
+  const [captchaSolved, setCaptchaSolved] = useState(false);
   const router = useRouter();
-  
+
+  useEffect(() => {
+    setLoginAttempt(1); // Activa el captcha desde el inicio
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoginAttempt(loginAttempt + 1);
 
-    if (!captchaSolved && loginAttempt > 0) {
-      // Verifica si el captcha fue resuelto
+    if (!captchaSolved) {
       setError("Por favor, completa el CAPTCHA.");
       return;
     }
@@ -47,30 +48,19 @@ function Signin() {
 
     if (res?.ok) {
       router.push("/dashboard/profile");
-      setCaptchaSolved(false); // Restablece el estado del captcha
-      setLoginAttempt(0);
+      setCaptchaSolved(false);
+      setLoginAttempt(1);
     }
   }
 
-  useEffect(() => {
-    const storedAttempt = localStorage.getItem("loginAttempt");
-    if (storedAttempt) {
-      setLoginAttempt(parseInt(storedAttempt));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("loginAttempt", loginAttempt.toString());
-  }, [loginAttempt]);
-
   const handleCaptchaSolved = () => {
     setCaptchaSolved(true);
-    setError(""); // Limpia el error del captcha si se resolvió
+    setError("");
   };
 
   const handleCaptchaFailed = () => {
     setCaptchaSolved(false);
-    setError("Captcha incorrecto. Inténtalo de nuevo."); // Muestra un mensaje de error
+    setError("Captcha incorrecto. Inténtalo de nuevo.");
   };
 
   return (
@@ -90,10 +80,7 @@ function Signin() {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-1.5 mb-3">
-            <Label
-              htmlFor="email"
-              className="block font-semibold text-base mb-1"
-            >
+            <Label htmlFor="email" className="block font-semibold text-base mb-1">
               Correo electronico
             </Label>
             <Input
@@ -101,14 +88,11 @@ function Signin() {
               name="email"
               className="hover:shadow-md"
               placeholder="Ingresa tu correo"
-              required // Add required attribute
+              required
             />
           </div>
           <div className="flex flex-col space-y-1.5 mb-3">
-            <Label
-              htmlFor="password"
-              className="block font-semibold text-base mb-1"
-            >
+            <Label htmlFor="password" className="block font-semibold text-base mb-1">
               Contraseña
             </Label>
             <Input
@@ -116,7 +100,7 @@ function Signin() {
               name="password"
               className="hover:shadow-md"
               placeholder="Ingresa tu contraseña"
-              required // Add required attribute
+              required
             />
           </div>
           {error && (
@@ -124,28 +108,16 @@ function Signin() {
               {error}
             </div>
           )}
-
-          {loginAttempt > 0 && (
-            <div className="mb-4">
-              <GameCaptcha
-                onSolved={handleCaptchaSolved}
-                onFailed={handleCaptchaFailed}
-              />
-            </div>
-          )}
-
+          <div className="mb-4">
+            <GameCaptcha onSolved={handleCaptchaSolved} onFailed={handleCaptchaFailed} />
+          </div>
           <Button type="submit" className="flex w-full hover:bg-[#FFB200]">
-            {" "}
-            {/* Added type="submit" */}
             Iniciar Sesión
           </Button>
         </form>
         <div className="flex flex-col items-center my-4">
           <p>
-            ¿No tienes cuenta?{" "}
-            <Link href={"/register"} className="hover:text-blue-500">
-              Registrate
-            </Link>
+            ¿No tienes cuenta? <Link href="/register" className="hover:text-blue-500">Registrate</Link>
           </p>
         </div>
       </div>
