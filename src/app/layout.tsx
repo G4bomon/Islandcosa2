@@ -1,5 +1,7 @@
+import Header from "@/components/Header";
 import Providers from "./Providers";
 import "./globals.css";
+
 
 export const metadata = {
   title: "Islandcosa",
@@ -15,6 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
+        <Header/>
           <div className="">{children}</div>
         </Providers>
       </body>
