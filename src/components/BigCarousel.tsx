@@ -1,69 +1,79 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const images = [
   {
     src: "/img/CASINO.jpg",
     title: "CASINO VIP LA GUAIRA",
-    link: "https://hotelviplaguaira.com"
+    link: "https://hotelviplaguaira.com",
   },
   {
     src: "/img/cintacostera.jpg",
     title: "VISITA LA CINTA COSTERA",
-    link: "https://redradiove.com/ya-puede-ir-a-disfrutar-de-la-noria-el-ojo-de-la-guaira-en-la-cinta-costera/"
+    link: "https://redradiove.com/ya-puede-ir-a-disfrutar-de-la-noria-el-ojo-de-la-guaira-en-la-cinta-costera/",
   },
   {
     src: "/img/CINEX.jpg",
     title: "NUEVO CINEX EN SOTAVENTO",
-    link: "https://www.eluniversal.com/venezuela/142471/despues-20-anos-estrenaran-dos-salas-de-cine-en-el-estado-la-guaira"
+    link: "https://www.eluniversal.com/venezuela/142471/despues-20-anos-estrenaran-dos-salas-de-cine-en-el-estado-la-guaira",
   },
 ];
 
 const BigCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null); // Referencia para el intervalo
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
-  };
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+  const startAutoSlide = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current); // Limpia el intervalo anterior
+    intervalRef.current = setInterval(() => {
+      nextSlide();
+    }, 4000);
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 4000);
-    return () => clearInterval(interval);
+    startAutoSlide();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+    startAutoSlide(); // Reinicia el intervalo al cambiar manualmente
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+    startAutoSlide(); // Reinicia el intervalo al cambiar manualmente
+  };
 
   return (
     <div className="relative w-full overflow-hidden">
       <div className="relative h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96">
-        {images.map((image, index) => (
-          <a
-            key={index}
-            href={image.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`absolute top-0 left-0 w-full h-full transition-opacity duration-700 ease-in-out ${
-              index === currentIndex ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <img
-              src={image.src}
-              alt={image.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-              <h2 className="text-white text-2xl md:text-4xl font-bold shadow-lg">
-                {image.title}
-              </h2>
-            </div>
-          </a>
-        ))}
+        <a
+          href={images[currentIndex].link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-0 left-0 w-full h-full"
+        >
+          <img
+            src={images[currentIndex].src}
+            alt={images[currentIndex].title}
+            className="w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <h2 className="text-white text-2xl md:text-4xl font-bold shadow-lg">
+              {images[currentIndex].title}
+            </h2>
+          </div>
+        </a>
       </div>
 
       {/* Botones de navegación */}

@@ -56,76 +56,12 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
 
   return (
     <>
-      {/* Barra de navegación con categorías */}
-      <div className="pt-8 mb-4 flex flex-wrap gap-2">
-        <Link
-          href="#"
-          onClick={handleHomeButtonClick}
-          className="my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0"
-        >
-          Inicio
-        </Link>
-        {categories.map((category) => (
-          <Link
-            key={category}
-            href="#"
-            onClick={() => {
-              setCategoryFilter(category);
-              setShowCards(true);
-            }}
-            className={`my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0 ${
-              categoryFilter === category
-                ? "text-amber-600 font-bold"
-                : "text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            {category}
-          </Link>
-        ))}
-      </div>
 
-      {/* Mostrar los artículos filtrados */}
-      {showCards && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredArticles.map((article) => (
-            <Link href={`/view/${article._id}/full`} key={article._id}>
-              <div className="border p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-105 bg-white">
-                <h2 className="text-xl font-semibold text-amber-600 truncate">
-                  {article.title}
-                </h2>
-                <p className="text-sm text-gray-500">
-                  Autor: {article.author || "Desconocido"}
-                </p>
-                <Badge className="mt-2 bg-amber-400 text-white">
-                  {article.category}
-                </Badge>
-                {article.image && (
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-48 object-cover mt-4 rounded-lg"
-                    loading="lazy"
-                  />
-                )}
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
+      {/*Hacer 2 divs, 1 div estructurado para la vista mobile, otro para la vista desktop
+      Cada uno con su barra de navegacion con categorias, */}
 
-      {/* Botón "Ver más" si hay más artículos */}
-      {filteredArticles.length > 10 && showCards && (
-        <div className="text-center mt-4">
-          <button
-            onClick={() => router.push(`/?category=${categoryFilter}`)}
-            className="px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition"
-          >
-            Ver más
-          </button>
-        </div>
-      )}
 
-      {/* Barra de navegación móvil */}
+      {/* vista móvil, aqui el input, campana y lo de inicio y registro*/}
       <div className="flex flex-col items-center md:hidden">
         <button onClick={toggleNavbar} className="p-2">
           {isOpen ? <X size={32} /> : <Menu size={32} />}
@@ -134,7 +70,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
 
       {isOpen && (
         <div className="flex flex-col md:hidden w-full mb-2 p-2">
-          <div className="flex flex-col justify-between">
+          <div className="top-side flex flex-col justify-between">
             <div className="my-2">
               <SearchBar
                 searchQuery={searchQuery}
@@ -144,10 +80,10 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                 }}
               />
             </div>
-            <div className="inline-flex items-center flex-wrap my-2 w-full justify-between border-b-2">
+            <div className="inline-flex items-center flex-wrap my-2 w-full justify-between">
               <div className="flex w-full mb-1">
                 {session ? (
-                  <div className="inline-flex w-full justify-between items-center">
+                  <div className="inline-flex w-full">
                     <div>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -173,7 +109,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
-                    <div className="mx-2">
+                    <div className="mx-2"> {/*vista registro e inicio sesion */}
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="outline">
@@ -211,10 +147,39 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
               </div>
             </div>
           </div>
+          <div className="bottom-side">
+            <nav className="w-auto flex justify-end">
+              <div className="w-full pt-8 mb-4 flex flex-col flex-wrap gap-2">
+                <Link
+                  href="#"
+                  onClick={handleHomeButtonClick}
+                  className="my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0"
+                >
+                  Inicio
+                </Link>
+                {categories.map((category) => (
+                  <Link
+                    key={category}
+                    href="#"
+                    onClick={() => {
+                      setCategoryFilter(category);
+                      setShowCards(true);
+                    }}
+                    className={`my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0 ${categoryFilter === category
+                      ? "text-amber-600 font-bold"
+                      : "text-gray-700 hover:bg-gray-200"
+                      }`}
+                  >
+                    {category}
+                  </Link>
+                ))}
+              </div>
+            </nav>
+          </div>
         </div>
       )}
 
-      {/* Barra de navegación desktop */}
+      {/* vista desktop, también está el input campana inicio y registro*/}
       <div className="hidden md:flex flex-col grow">
         <div className="top-side flex flex-auto justify-between w-full my-2">
           <SearchBar
@@ -293,7 +258,76 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
             </div>
           </div>
         </div>
+        <div className="bottom-side mx-2">
+          <nav className="">
+            <div className="w-full flex flex-wrap">
+              <Link
+                href="#"
+                onClick={handleHomeButtonClick}
+                className="my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0"
+              >
+                Inicio
+              </Link>
+              {categories.map((category) => (
+                <Link
+                  key={category}
+                  href="#"
+                  onClick={() => {
+                    setCategoryFilter(category);
+                    setShowCards(true);
+                  }}
+                  className={`my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0 ${categoryFilter === category
+                    ? "text-amber-600 font-bold"
+                    : "text-gray-700 hover:bg-gray-200"
+                    }`}
+                >
+                  {category}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        </div>
       </div>
+      {/* Mostrar los artículos filtrados */}
+      {showCards && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full mt-2 grow-0">
+          {filteredArticles.map((article) => (
+            <Link href={`/view/${article._id}/full`} key={article._id}>
+              <div className="border p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 sm:max-w-[280px] sm:min-w-[270px] md:min-w-[320px] transform mdhover:scale-105 bg-white">
+                <h2 className="text-xl font-semibold text-amber-600 truncate">
+                  {article.title}
+                </h2>
+                <p className="text-sm text-gray-500">
+                  Autor: {article.author || "Desconocido"}
+                </p>
+                <Badge className="mt-2 bg-amber-400 text-white">
+                  {article.category}
+                </Badge>
+                {article.image && (
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-48 object-cover mt-4 rounded-lg"
+                    loading="lazy"
+                  />
+                )}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {/* Botón "Ver más" si hay más artículos */}
+      {filteredArticles.length > 10 && showCards && (
+        <div className="text-center mt-4">
+          <button
+            onClick={() => router.push(`/?category=${categoryFilter}`)}
+            className="px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition"
+          >
+            Ver más
+          </button>
+        </div>
+      )}
     </>
   );
 };
