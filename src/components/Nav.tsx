@@ -87,7 +87,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                     <div>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="outline">
+                          <Button variant="outline" className="bg-amber-400">
                             <Bell size={20} />
                           </Button>
                         </DropdownMenuTrigger>
