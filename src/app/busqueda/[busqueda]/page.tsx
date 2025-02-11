@@ -1,3 +1,4 @@
+import BackButton from "@/components/BackButton";
 import { Badge } from "@/components/ui/badge";
 import { connectDB } from "@/libs/mongodb";
 import News from "@/models/news";
@@ -23,6 +24,7 @@ export default async function SearchPage({ params }: SearchPageProps) {
 
   return (
     <div>
+        <BackButton/>
       <h1 className="text-2xl font-bold text-center my-4">
         Resultados de búsqueda para: "{searchQuery}"
       </h1>

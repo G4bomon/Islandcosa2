@@ -29,7 +29,7 @@ function Signup() {
         redirect: false,
       });
 
-      if (res?.ok) return router.push("/Pruebas");
+      if (res?.ok) return router.push("/");
     } catch (error) {
       console.log(error);
       if (error instanceof AxiosError) {
