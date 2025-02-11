@@ -26,7 +26,7 @@ export default async function FavoritesPage() {
       <BackButton/>
       <Navbar />
       <h1 className="text-2xl font-bold text-center my-4">Mis Favoritos</h1>
-      <div className="grid gap-4 pt-8">
+      <div className="grid md:grid-cols-3 gap-4 pt-8">
         {favoriteArticles.map((article) => (
           <Link href={`/view/${article._id}/full`} key={article._id}>
             <div className="p-4 rounded hover:shadow-lg  transition duration-300 transform">
