@@ -27,6 +27,7 @@ const UserSchema = new Schema(
       required: [false, "admin is not required"],
       default: false,
     },
+    favorites: { type: [String], default: [] },
   },
   {
     timestamps: true,
