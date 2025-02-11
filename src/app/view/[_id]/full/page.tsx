@@ -9,9 +9,9 @@ import { useNewsStore } from "@/app/store";
 import TikTokEmbed from "@/components/TikTokEmbed";
 import { use } from 'react';
 import { useSession } from "next-auth/react";
-import { Heart} from "lucide-react";
 import Scroll from "@/components/ScrollUp"
 import FavoriteButton from "@/components/favoriteButton";
+import BackButton from "@/components/BackButton";
 
 interface Props {
   params: Promise<{ _id: string }>;
@@ -70,14 +70,12 @@ function Fullarticle({ params }: Props) {
   }
 
   return (
-    <div className="max-w-6xl mx-auto mt-8 p-8 bg-gradient-to-r from-blue-50 to-white shadow-2xl rounded-xl flex flex-col gap-6 border border-gray-200 relative">
+    <div className="max-w-6xl mx-auto mt-8 p-8 bg-gradient-to-r from-blue-50 to-white shadow-2xl rounded-xl flex flex-col gap-6 border border-gray-200">
+      <BackButton/>
       {/* Imagen del Articulo */}
       {image && (
         <div className="relative w-full overflow-hidden rounded-xl shadow-lg">
           <img src={image} alt="Imagen del artículo" className="w-full h-96 object-cover" />
-          <button className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white shadow-md p-3 rounded-full flex items-center justify-center">
-            <Heart className="w-6 h-6" />
-          </button>
         </div>
       )}
       {/* Titulo del Articulo */}

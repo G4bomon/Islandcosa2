@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import ArticleButton from "./ArticleButton";
 const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
   const [categoryFilter, setCategoryFilter] = useState<string>("All");
   const [showCards, setShowCards] = useState<boolean>(true);
@@ -109,7 +109,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
-                    <div className="mx-2"> {/*vista registro e inicio sesion */}
+                    <div className="mx-2 flex"> {/*vista registro e inicio sesion */}
                       <>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
@@ -133,6 +133,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                         >
                           Favoritos
                         </Link>
+                        <ArticleButton/>
                       </>
                     </div>
                   </div>
@@ -152,6 +153,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                     </Link>
                   </div>
                 )}
+                
               </div>
             </div>
           </div>
@@ -161,7 +163,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                 <Link
                   href="#"
                   onClick={handleHomeButtonClick}
-                  className="my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0"
+                  className="my-1 md:my-0 font-medium px-4 py-2 md:border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:md:border-r-0"
                 >
                   Inicio
                 </Link>
@@ -173,7 +175,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                       setCategoryFilter(category);
                       setShowCards(true);
                     }}
-                    className={`my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0 ${categoryFilter === category
+                    className={`my-1 md:my-0 font-medium px-4 py-2 md:border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:md:border-r-0 ${categoryFilter === category
                       ? "text-amber-600 font-bold"
                       : "text-gray-700 hover:bg-gray-200"
                       }`}
@@ -229,7 +231,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
               </DropdownMenu>
             )}
 
-            <div className="ml-4">
+            <div className="ml-4 flex">
               {session ? (
                 <>
                   <DropdownMenu>
@@ -272,6 +274,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                   </Link>
                 </div>
               )}
+              <ArticleButton/>
             </div>
           </div>
         </div>
@@ -281,7 +284,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
               <Link
                 href="#"
                 onClick={handleHomeButtonClick}
-                className="my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0"
+                className="my-1 md:my-0 font-medium px-4 py-2 md:border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:md:border-r-0"
               >
                 Inicio
               </Link>
@@ -293,7 +296,7 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                     setCategoryFilter(category);
                     setShowCards(true);
                   }}
-                  className={`my-1 md:my-0 font-medium px-4 py-2 border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:border-r-0 ${categoryFilter === category
+                  className={`my-1 md:my-0 font-medium px-4 py-2 md:border-r border-amber-400 hover:bg-amber-400 hover:rounded-t-lg last:md:border-r-0 ${categoryFilter === category
                     ? "text-amber-600 font-bold"
                     : "text-gray-700 hover:bg-gray-200"
                     }`}

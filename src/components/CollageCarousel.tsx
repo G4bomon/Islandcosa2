@@ -38,7 +38,7 @@ const CollageCarousel = () => {
   };
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto mt-4">
+    <div className="relative w-full max-w-7xl mx-auto py-4 my-4">
       <div className="relative flex items-center">
         {items.map((item, index) => (
           <div

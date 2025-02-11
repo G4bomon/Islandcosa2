@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import BackButton from '@/components/BackButton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
@@ -42,7 +43,9 @@ function Edit2() {
     };
 
     return (
+
         <div className="flex justify-center py-10 px-4 bg-gray-100 min-h-screen">
+            <BackButton/>
             <form onSubmit={handleUpdate} className="w-full max-w-3xl">
                 <Card className="shadow-lg bg-white rounded-xl">
                     <CardHeader className="bg-amber-400 text-black p-5 rounded-t-xl">
@@ -117,6 +120,7 @@ function Edit2() {
                 </Card>
             </form>
         </div>
+
     );
 }
 

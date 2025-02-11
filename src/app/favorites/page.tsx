@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Link from "next/link";
 import Navbar from "@/components/navbar";
+import BackButton from "@/components/BackButton";
 
 export default async function FavoritesPage() {
   const session = await getServerSession(authOptions);
@@ -22,9 +23,10 @@ export default async function FavoritesPage() {
 
   return (
     <div>
+      <BackButton/>
       <Navbar />
       <h1 className="text-2xl font-bold text-center my-4">Mis Favoritos</h1>
-      <div className="grid grid-cols-3 gap-4 pt-8">
+      <div className="grid gap-4 pt-8">
         {favoriteArticles.map((article) => (
           <Link href={`/view/${article._id}/full`} key={article._id}>
             <div className="p-4 rounded hover:shadow-lg  transition duration-300 transform">
