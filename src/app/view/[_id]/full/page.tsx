@@ -9,6 +9,8 @@ import { useNewsStore } from "@/app/store";
 import TikTokEmbed from "@/components/TikTokEmbed";
 import { use } from 'react';
 import { useSession } from "next-auth/react";
+import { Heart} from "lucide-react";
+import Scroll from "@/components/ScrollUp"
 
 interface Props {
   params: Promise<{ _id: string }>;
@@ -25,7 +27,7 @@ function Fullarticle({ params }: Props) {
       try {
         const response = await fetch(`/api/articles/${resolvedParams._id}`);
         const article = await response.json();
-        
+
         if (article) {
           const articleData = {
             id: article._id.toString(),
@@ -37,7 +39,7 @@ function Fullarticle({ params }: Props) {
             youtube: article.youtube || '',
             tiktok: article.tiktok || ''
           };
-          
+
           setArticle(articleData);
         }
       } catch (error) {
@@ -52,7 +54,7 @@ function Fullarticle({ params }: Props) {
 
   if (isLoading) {
     return (
-      <div className="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
+      <div className="max-w-6xl mx-auto mt-8 p-6 bg-white shadow-xl rounded-xl animate-pulse">
         <p className="text-lg font-semibold text-gray-800">Loading...</p>
       </div>
     );
@@ -60,53 +62,60 @@ function Fullarticle({ params }: Props) {
 
   if (!id) {
     return (
-      <div className="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
-        <p className="text-lg font-semibold text-gray-800">Article not found</p>
+      <div className="max-w-6xl mx-auto mt-8 p-6 bg-white shadow-xl rounded-xl">
+        <p className="text-lg font-semibold text-gray-800">Articulo no encontrado</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
-      {/* Titulo del Articulo */}
-      <h2 className="text-3xl font-bold text-gray-900 mb-4">{title}</h2>
-
-      {/* Contenido del Articulo */}
-      <p className="text-lg text-gray-700 mb-6">{content}</p>
-
-      {/* Categoría y Autor */}
-      <div className="flex items-center gap-3 mb-6">
-        <Badge className="text-sm px-3 py-1 bg-blue-100 text-blue-800 rounded-full">
-          {category}
-        </Badge>
-        <span className="text-sm text-gray-500">Author: {author}</span>
-      </div>
-
+    <div className="max-w-6xl mx-auto mt-8 p-8 bg-gradient-to-r from-blue-50 to-white shadow-2xl rounded-xl flex flex-col gap-6 border border-gray-200 relative">
       {/* Imagen del Articulo */}
       {image && (
-        <img
-          src={image}
-          alt="Article Image"
-          className="w-full max-h-96 object-cover rounded-xl shadow-md mb-6"
-        />
+        <div className="relative w-full overflow-hidden rounded-xl shadow-lg">
+          <img src={image} alt="Imagen del artículo" className="w-full h-96 object-cover" />
+          <button className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white shadow-md p-3 rounded-full flex items-center justify-center">
+            <Heart className="w-6 h-6" />
+          </button>
+        </div>
       )}
+      {/* Titulo del Articulo */}
+      <div className="text-center">
+        <h2 className="text-5xl font-bold text-gray-900 leading-tight">{title}</h2>
+      </div>
+
+      {/* Categoría y Autor */}
+      <div className="flex items-center justify-center gap-4 text-gray-600 text-sm">
+        <Badge className="px-4 py-2 bg-amber-400 text-white rounded-full">{category}</Badge>
+        <span className="text-gray-500">Por: {author}</span>
+      </div>
+
+      <div className="text-lg text-gray-700 leading-relaxed text-justify px-6 space-y-4">
+        {content.split('\n').map((paragraph, index) => (
+          <p key={index}>{paragraph}</p>
+        ))}
+      </div>
+
+
 
       {/* Video de YouTube */}
       {youtube && (
-        <iframe
-          className="w-full aspect-video rounded-lg mb-6 shadow-lg"
-          src={youtube}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        ></iframe>
+        <div className="w-full flex justify-center">
+          <iframe
+            className="w-full md:w-4/5 aspect-video rounded-lg shadow-lg"
+            src={youtube}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        </div>
       )}
 
       {/* Embed de TikTok */}
       {tiktok && (
-        <div className="mb-6">
+        <div className="flex justify-center min-h-[320px]">
           <TikTokEmbed url={tiktok} />
         </div>
       )}
@@ -114,15 +123,17 @@ function Fullarticle({ params }: Props) {
       {/* Botones de Editar y Eliminar */}
       {session && session.user?.admin ? (
         <div className="flex justify-between items-center mt-6">
-        <Link href={`/view/${id}/edit`}>
-          <Button className="bg-blue-500 hover:bg-blue-600 text-white shadow-md py-2 px-4 rounded-lg">
-            Editar
-          </Button>
-        </Link>
-        <Deletebutton articleId={id} />
-      </div>
+          <Link href={`/view/${id}/edit`}>
+            <Button className="bg-amber-400 hover:bg-black text-white shadow-md py-2 px-4 rounded-lg">
+              Editar
+            </Button>
+          </Link>
+          <Deletebutton articleId={id} />
+        </div>
       ) : null}
-      
+
+      <Scroll/>
+
     </div>
   );
 }

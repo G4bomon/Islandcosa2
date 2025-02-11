@@ -5,35 +5,23 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const items = [
   {
-    images: [
-      "/img/HOTEL1.jpg",
-      "/img/HOTEL2.jpg",
-      "/img/HOTEL3.jpg"
-    ],
-    title: "HOTEL VIP LA GUAIRA",
+    images: ["/img/HOTEL1.jpg", "/img/HOTEL2.jpg", "/img/HOTEL3.jpg"],
+    title: "Hotel VIP La Guaira",
     description: "Disfruta de una noche inolvidable en el mejor casino de la ciudad.",
-    link: "https://www.booking.com/hotel/ve/vip-la-guaira.es.html?aid=356980&label=gog235jc-1DCAso8QFCDXZpcC1sYS1ndWFpcmFIM1gDaPEBiAEBmAEKuAEXyAEV2AED6AEBiAIBqAIDuAKc1KW9BsACAdICJGRmZWUyODk1LWNlMmItNDFmNC04M2IzLTQ5OThiZTFlMWY3YtgCBOACAQ&sid=ce037ae5b81b61f101a5fa6aef165561&dist=0&keep_landing=1&sb_price_type=total&type=total&"
+    link: "https://www.booking.com/hotel/ve/vip-la-guaira.es.html",
   },
   {
-    images: [
-      "/img/PLAYA1.jpg",
-      "/img/PLAYA2.jpg",
-      "/img/PLAYA3.jpg"
-    ],
+    images: ["/img/PLAYA1.jpg", "/img/PLAYA2.jpg", "/img/PLAYA3.jpg"],
     title: "Día de Playa",
     description: "Relájate en las playas más hermosas del estado.",
-    link: "https://vacacionesenlaguaira.com/cuales-son-las-mejores-playas-de-la-guaira/"
+    link: "https://vacacionesenlaguaira.com/cuales-son-las-mejores-playas-de-la-guaira/",
   },
   {
-    images: [
-      "/img/SANJUAN1.jpeg",
-      "/img/SANJUAN2.jpg",
-      "/img/SANJUAN3.jpg"
-    ],
-    title: "CELBRA SAN JUAN EN LA GUAIRA",
+    images: ["/img/SANJUAN1.jpeg", "/img/SANJUAN2.jpg", "/img/SANJUAN3.jpg"],
+    title: "Celebra San Juan en La Guaira",
     description: "No te pierdas de los mejores tambores venezolanos y del calor del Guaireño en este día.",
-    link: "https://noticiaalminuto.com/el-to-lo-tiene-y-to-lo-da-devocion-a-san-juan-bautista-el-unico-santo-al-que-le-celebran-su-cumpleanos/"
-  }
+    link: "https://noticiaalminuto.com/el-to-lo-tiene-y-to-lo-da-devocion-a-san-juan-bautista-el-unico-santo-al-que-le-celebran-su-cumpleanos/",
+  },
 ];
 
 const CollageCarousel = () => {
@@ -50,16 +38,18 @@ const CollageCarousel = () => {
   };
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto">
+    <div className="relative w-full max-w-7xl mx-auto mt-4">
       <div className="relative flex items-center">
         {items.map((item, index) => (
           <div
             key={index}
-            className={`transition-opacity duration-700 ease-in-out flex items-center w-full ${index === currentIndex ? "opacity-100" : "opacity-0 absolute inset-0"}`}
+            className={`transition-opacity duration-700 ease-in-out flex items-center w-full ${
+              index === currentIndex ? "opacity-100" : "opacity-0 absolute inset-0"
+            }`}
           >
-            {/* Contenedor de las imágenes con una cuadrícula más dinámica */}
-            <div className="grid grid-cols-2 grid-rows-1 gap-4 w-full">
-              {/* Imagen cuadrada grande a la izquierda */}
+            {/* Contenedor de imágenes con alturas fijas para evitar cambios bruscos */}
+            <div className="grid grid-cols-2 grid-rows-1 gap-4 w-full h-64 sm:h-72 md:h-80 lg:h-96">
+              {/* Imagen principal grande */}
               <div className="col-span-1">
                 <img
                   src={item.images[0]}
@@ -68,7 +58,7 @@ const CollageCarousel = () => {
                 />
               </div>
 
-              {/* Imágenes rectangulares a la derecha */}
+              {/* Imágenes secundarias */}
               <div className="flex flex-col justify-between col-span-1 space-y-2">
                 <img
                   src={item.images[1]}
@@ -83,14 +73,13 @@ const CollageCarousel = () => {
               </div>
             </div>
 
-            {/* Descripción y enlace */}
-            <div className="w-1/2 pl-6 flex flex-col justify-between">
+            {/* Contenido descriptivo */}
+            <div className="w-1/2 pl-6 flex flex-col justify-between h-64 sm:h-72 md:h-80 lg:h-96">
               <div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">{item.title}</h2>
-                <p className="text-gray-600 mb-4">{item.description}</p>
+                <p className="text-gray-600 mb-4 line-clamp-3">{item.description}</p>
               </div>
 
-              {/* Botón "Ver más" individual para cada artículo */}
               <a
                 href={item.link}
                 target="_blank"
