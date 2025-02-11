@@ -27,14 +27,23 @@ export default async function FavoritesPage() {
       <div className="grid grid-cols-3 gap-4 pt-8">
         {favoriteArticles.map((article) => (
           <Link href={`/view/${article._id}/full`} key={article._id}>
-            <div className="border p-4 rounded-lg shadow-md hover:shadow-lg transition">
-              <h2 className="text-xl font-bold">{article.title}</h2>
-              <p className="text-sm text-gray-500">Autor: {article.author}</p>
+            <div className="p-4 rounded hover:shadow-lg  transition duration-300 transform">
+              {article.image && (
+                <img
+                  src={article.image}
+                  alt={article.title}
+                  className="w-full h-64 object-cover"
+                  loading="lazy"
+                />
+              )}
+              <Badge className="mt-2 bg-amber-400 text-white">
+                  {article.category}
+                </Badge>
+              <h2 className="text-2xl font-semibold text-black line-clamp-2">{article.title}</h2>
+              <p className="text-xs text-gray-500 pb-2">Autor: {article.author || "Desconocido"}</p>
               <p className="text-sm text-gray-400">
                 Publicado el: {new Date(article.date).toLocaleDateString("es-ES")}
               </p>
-              <Badge>{article.category}</Badge>
-              {article.image && <img src={article.image} alt={article.title} className="w-full h-40 object-cover mt-2 rounded-md" />}
             </div>
           </Link>
         ))}

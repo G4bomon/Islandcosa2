@@ -11,6 +11,7 @@ import { use } from 'react';
 import { useSession } from "next-auth/react";
 import { Heart} from "lucide-react";
 import Scroll from "@/components/ScrollUp"
+import FavoriteButton from "@/components/favoriteButton";
 
 interface Props {
   params: Promise<{ _id: string }>;
@@ -119,7 +120,7 @@ function Fullarticle({ params }: Props) {
           <TikTokEmbed url={tiktok} />
         </div>
       )}
-
+      {session && <FavoriteButton articleId={id}/>}
       {/* Botones de Editar y Eliminar */}
       {session && session.user?.admin ? (
         <div className="flex justify-between items-center mt-6">

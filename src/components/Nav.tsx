@@ -110,22 +110,30 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
                       </DropdownMenu>
                     </div>
                     <div className="mx-2"> {/*vista registro e inicio sesion */}
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="outline">
-                            <p>{session.user?.fullname || "Profile"}</p>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
-                          <DropdownMenuLabel>
-                            {session.user?.email || "email"}
-                          </DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => signOut()}>
-                            Log out
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                      <>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="outline">
+                              <p>{session.user?.fullname || "Profile"}</p>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="w-56">
+                            <DropdownMenuLabel>
+                              {session.user?.email || "email"}
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => signOut()}>
+                              Log out
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                        <Link
+                          href="/favorites"
+                          className="px-4 py-2 border rounded-lg bg-white mx-2 text-sm font-semibold"
+                        >
+                          Favoritos
+                        </Link>
+                      </>
                     </div>
                   </div>
                 ) : (
@@ -223,22 +231,31 @@ const Nav = ({ newsArticles }: { newsArticles: any[] }) => {
 
             <div className="ml-4">
               {session ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline">
-                      <p>{session.user?.fullname || "Profile"}</p>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>
-                      {session.user?.email || "email"}
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => signOut()}>
-                      Log out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline">
+                        <p>{session.user?.fullname || "Profile"}</p>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56">
+                      <DropdownMenuLabel>
+                        {session.user?.email || "email"}
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => signOut()}>
+                        Log out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <Link
+                    href="/favorites"
+                    className="px-4 py-2 border rounded-lg bg-white mx-2 text-sm font-semibold"
+                  >
+                    Favoritos
+                  </Link>
+                </>
+
               ) : (
                 <div className="flex items-center">
                   <button

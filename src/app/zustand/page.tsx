@@ -13,7 +13,7 @@ const MyComponent = () => {
       {session && session.user?.admin ? (
         <Link href={"/article"}>
         <Button>
-          crear aticulo
+          Crear Articulo
         </Button>
         </Link>
       ) : null
