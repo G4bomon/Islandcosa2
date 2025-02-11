@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSession, signOut, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, X, Bell } from "lucide-react";
+import { Menu, X, Bell, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SearchBar from "@/components/SearchBar";
 import {
@@ -15,15 +15,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ArticleButton from "./ArticleButton";
+import { Input } from "./ui/input";
 const Nav = () => {
-  const [categoryFilter, setCategoryFilter] = useState<string>("All");
-  const [showCards, setShowCards] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState<string>("");
   const [notifications, setNotifications] = useState<any[]>([]);
   const router = useRouter();
   const { data: session } = useSession();
 
+
+  const handlesearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const searchInput = e.currentTarget.search.value.trim();
+    if (searchInput) {
+      router.push(`/busqueda/${encodeURIComponent(searchInput)}`);
+    }
+  };
 
 
   const toggleNavbar = () => setIsOpen(!isOpen);
@@ -44,13 +50,17 @@ const Nav = () => {
         <div className="flex flex-col md:hidden w-full mb-2 p-2">
           <div className="top-side flex flex-col justify-between">
             <div className="my-2">
-              <SearchBar
-                searchQuery={searchQuery}
-                onSearchChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setShowCards(true);
-                }}
+            <form onSubmit={handlesearch} className="flex w-full max-w-sm items-center space-x-2">
+              <Input 
+                type="search" 
+                name="search"
+                placeholder="Busca opciones" 
+                className="rounded-3xl"
               />
+              <Button type="submit" size="sm" className="rounded-full">
+                <Search />
+              </Button>
+            </form>
             </div>
             <div className="inline-flex items-center flex-wrap my-2 w-full justify-between">
               <div className="flex w-full mb-1">
@@ -140,13 +150,17 @@ const Nav = () => {
       {/* vista desktop, también está el input campana inicio y registro*/}
       <div className="hidden md:flex flex-col grow">
         <div className="top-side flex flex-auto justify-between w-full my-2">
-          <SearchBar
-            searchQuery={searchQuery}
-            onSearchChange={(e) => {
-              setSearchQuery(e.target.value);
-              setShowCards(true);
-            }}
+        <form onSubmit={handlesearch} className="flex w-full max-w-sm items-center space-x-2">
+          <Input 
+            type="search" 
+            name="search"
+            placeholder="Busca opciones" 
+            className="rounded-3xl"
           />
+          <Button type="submit" size="sm" className="rounded-full">
+            <Search />
+          </Button>
+        </form>
           <div className="ml-2 flex items-center">
             {session && (
               <DropdownMenu>
