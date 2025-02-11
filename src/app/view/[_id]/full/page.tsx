@@ -76,6 +76,7 @@ function Fullarticle({ params }: Props) {
       {image && (
         <div className="relative w-full overflow-hidden rounded-xl shadow-lg">
           <img src={image} alt="Imagen del artículo" className="w-full h-96 object-cover" />
+          {session && <FavoriteButton articleId={id}/>}
         </div>
       )}
       {/* Titulo del Articulo */}
@@ -118,7 +119,7 @@ function Fullarticle({ params }: Props) {
           <TikTokEmbed url={tiktok} />
         </div>
       )}
-      {session && <FavoriteButton articleId={id}/>}
+      
       {/* Botones de Editar y Eliminar */}
       {session && session.user?.admin ? (
         <div className="flex justify-between items-center mt-6">

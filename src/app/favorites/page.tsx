@@ -7,6 +7,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Link from "next/link";
 import Navbar from "@/components/navbar";
 import BackButton from "@/components/BackButton";
+import FavoriteButton from "@/components/favoriteButton";
 
 export default async function FavoritesPage() {
   const session = await getServerSession(authOptions);

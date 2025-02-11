@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
+import { Heart} from "lucide-react";
 
 interface FavoriteButtonProps {
   articleId: string;
@@ -43,12 +44,14 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ articleId }) => {
   };
 
   return (
-    <Button
+    <button
+      key={isFavorite ? "favorite" : "not-favorite"}
       onClick={toggleFavorite}
-      className={`py-2 px-4 rounded-lg shadow-md ${isFavorite ? "bg-red-500" : "bg-gray-500"} text-white`}
+      className={`absolute top-4 right-4 p-3 rounded-full shadow-md flex items-center justify-center transition-colors z-999 
+        ${isFavorite ? "bg-red-800" : "bg-red-500"} text-white hover:bg-red-800`}
     >
-      {isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
-    </Button>
+      <Heart className="w-6 h-6" />
+    </button>
   );
 };
 
