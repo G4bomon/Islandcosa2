@@ -4,11 +4,13 @@ import News from "@/models/news";
 import Link from "next/link";
 
 interface SearchPageProps {
-  params: { busqueda?: string };
+  params: Promise<{ busqueda?: string }>;
 }
 
 export default async function SearchPage({ params }: SearchPageProps) {
-  const searchQuery = decodeURIComponent(params.busqueda || "").trim();
+  // Await the params promise
+  const resolvedParams = await params;
+  const searchQuery = decodeURIComponent(resolvedParams.busqueda || "").trim();
 
   if (!searchQuery) {
     return <p className="text-center text-gray-500">No se proporcionó un término de búsqueda.</p>;
