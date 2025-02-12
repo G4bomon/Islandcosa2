@@ -21,7 +21,7 @@ export default async function SearchPage({ params }: SearchPageProps) {
   if (!articles.length) {
     return (
       <p className="text-center text-gray-500">
-        No se encontraron artículos para &quot;{searchQuery}&quot;.
+        No se encontraron artículos para: {searchQuery}.
       </p>
     );
   }
@@ -30,7 +30,7 @@ export default async function SearchPage({ params }: SearchPageProps) {
     <div>
       <BackButton />
       <h1 className="text-2xl font-bold text-center my-4">
-        Resultados de búsqueda para: &quot;{searchQuery}&quot;
+        Resultados de búsqueda para: {searchQuery}
       </h1>
       <div className="grid md:grid-cols-3 gap-4 pt-8">
         {articles.map((article) => (
