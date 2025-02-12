@@ -8,13 +8,13 @@ const items = [
   {
     images: ["/img/HOTEL1.jpg", "/img/HOTEL2.jpg", "/img/HOTEL3.jpg"],
     title: "Hotel VIP La Guaira",
-    description: "VIP Hotel ofrece una experiencia única en una de las zonas más vibrantes y caribeñas del país. nuestra privilegiada ubicación no solo brinda un acceso fácil a las playas paradisíacas del Caribe, sino también a una rica oferta cultural, histórica y de entretenimiento. La seguridad y tranquilidad que caracteriza la región garantizan una estancia relajada, mientras que la calidez y hospitalidad de sus habitantes hacen que cada visitante se sienta como en casa.",
+    description: "VIP Hotel ofrece una experiencia única en una de las zonas más vibrantes y caribeñas del país.",
     link: "/view/67ac17f2aa6ce0ce513647a8/full",
   },
   {
     images: ["/img/PLAYA1.jpg", "/img/PLAYA2.jpg", "/img/PLAYA3.jpg"],
     title: "Día de Playa",
-    description: "Las playas de La Guaira son un verdadero tesoro en la costa venezolana, donde la belleza natural y la cultura local se entrelazan. Desde tranquilos rincones como Playa Pantaleta hasta la animada atmósfera del Día de los Inocentes en Chuspa, cada lugar ofrece una experiencia singular. Con más de un litoral cautivador, este destino te invita a disfrutar de momentos inolvidables en un entorno idílico.",
+    description: "Desde tranquilos rincones como Playa Pantaleta hasta la animada atmósfera del Día de los Inocentes en Chuspa, cada lugar ofrece una experiencia singular. Con más de un litoral cautivador, este destino te invita a disfrutar de momentos inolvidables en un entorno idílico.",
     link: "/view/67ac1eb4aa6ce0ce51364812/full",
   },
   {
