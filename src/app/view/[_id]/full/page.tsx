@@ -70,8 +70,9 @@ function Fullarticle({ params }: Props) {
   }
 
   return (
-    <div className="max-w-6xl mx-auto mt-8 p-8 bg-gradient-to-r from-blue-50 to-white shadow-2xl rounded-xl flex flex-col gap-6 border border-gray-200">
+    <>
       <BackButton/>
+    <div className="max-w-6xl mx-auto mt-8 p-8 bg-gradient-to-r from-blue-50 to-white shadow-2xl rounded-xl flex flex-col gap-6 border border-gray-200">
       {/* Imagen del Articulo */}
       {image && (
         <div className="relative w-full overflow-hidden rounded-xl shadow-lg">
@@ -135,6 +136,7 @@ function Fullarticle({ params }: Props) {
       <Scroll/>
 
     </div>
+    </>
   );
 }
 

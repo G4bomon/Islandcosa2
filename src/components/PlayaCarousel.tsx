@@ -28,7 +28,7 @@ const PlayaCarousel: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
               <div className="">
 
               <h3 className="text-lg font-semibold text-black px-4">{article.title}</h3>
-              <p className="text-sm text-gray-500 px-4">{article.content || "No se añadió una descripción"}</p>
+              <p className="text-sm text-gray-500 px-4 line-clamp-3">{article.content || "No se añadió una descripción"}</p>
               </div>
 
             </div>
