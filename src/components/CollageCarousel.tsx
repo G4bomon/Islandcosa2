@@ -1,26 +1,27 @@
 "use client";
 
 import React, { useState, MouseEvent } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight,} from "lucide-react";
+import Link from "next/link";
 
 const items = [
   {
     images: ["/img/HOTEL1.jpg", "/img/HOTEL2.jpg", "/img/HOTEL3.jpg"],
     title: "Hotel VIP La Guaira",
-    description: "Disfruta de una noche inolvidable en el mejor casino de la ciudad.",
-    link: "https://www.booking.com/hotel/ve/vip-la-guaira.es.html",
+    description: "VIP Hotel ofrece una experiencia única en una de las zonas más vibrantes y caribeñas del país. nuestra privilegiada ubicación no solo brinda un acceso fácil a las playas paradisíacas del Caribe, sino también a una rica oferta cultural, histórica y de entretenimiento. La seguridad y tranquilidad que caracteriza la región garantizan una estancia relajada, mientras que la calidez y hospitalidad de sus habitantes hacen que cada visitante se sienta como en casa.",
+    link: "/view/67ac17f2aa6ce0ce513647a8/full",
   },
   {
     images: ["/img/PLAYA1.jpg", "/img/PLAYA2.jpg", "/img/PLAYA3.jpg"],
     title: "Día de Playa",
-    description: "Relájate en las playas más hermosas del estado.",
-    link: "https://vacacionesenlaguaira.com/cuales-son-las-mejores-playas-de-la-guaira/",
+    description: "Las playas de La Guaira son un verdadero tesoro en la costa venezolana, donde la belleza natural y la cultura local se entrelazan. Desde tranquilos rincones como Playa Pantaleta hasta la animada atmósfera del Día de los Inocentes en Chuspa, cada lugar ofrece una experiencia singular. Con más de un litoral cautivador, este destino te invita a disfrutar de momentos inolvidables en un entorno idílico.",
+    link: "/view/67ac1eb4aa6ce0ce51364812/full",
   },
   {
     images: ["/img/SANJUAN1.jpeg", "/img/SANJUAN2.jpg", "/img/SANJUAN3.jpg"],
-    title: "Celebra San Juan en La Guaira",
-    description: "No te pierdas de los mejores tambores venezolanos y del calor del Guaireño en este día.",
-    link: "https://noticiaalminuto.com/el-to-lo-tiene-y-to-lo-da-devocion-a-san-juan-bautista-el-unico-santo-al-que-le-celebran-su-cumpleanos/",
+    title: "Si San Juan lo tiene, ¡ San Juan te lo da !",
+    description: "El día 23 de junio se celebra la verbena de San Juan. Es la noche más corta del año y también una de las más mágicas, en la que se encienden hogueras en las plazas y las playas de los pueblos para celebrar la llegada del verano.",
+    link: "/view/67ac2123aa6ce0ce5136483d/full",
   },
 ];
 
@@ -76,14 +77,14 @@ const CollageCarousel = () => {
             <div className="md:flex md:flex-col md:justify-center w-full sm:w-1/2 px-4 py-4 sm:py-0">
               <h2 className="text-xl sm:text-3xl font-bold text-gray-900">{item.title}</h2>
               <p className="text-gray-600 mt-2">{item.description}</p>
-              <a
+              <Link
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-amber-400 hover:text-amber-600 font-semibold underline inline-block"
               >
                 Ver más
-              </a>
+              </Link>
             </div>
           </div>
         ))}

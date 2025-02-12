@@ -24,7 +24,6 @@ async function PruebaPage() {
 
   return (
     <div className="p-4">
-      <p className="text-gray-600 mb-6">Bienvenido a NiceTrip</p>
 
 
       <BigCarousel />

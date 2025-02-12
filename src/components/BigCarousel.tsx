@@ -2,22 +2,23 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const images = [
   {
     src: "/img/CASINO.jpg",
-    title: "CASINO VIP LA GUAIRA",
-    link: "https://hotelviplaguaira.com",
+    title: "GRAN CASINO LA GUAIRA",
+    link: "/view/67ac197caa6ce0ce513647b9/full",
   },
   {
     src: "/img/cintacostera.jpg",
     title: "VISITA LA CINTA COSTERA",
-    link: "https://redradiove.com/ya-puede-ir-a-disfrutar-de-la-noria-el-ojo-de-la-guaira-en-la-cinta-costera/",
+    link: "/view/67ac1ce9aa6ce0ce513647ea/full",
   },
   {
     src: "/img/CINEX.jpg",
     title: "NUEVO CINEX EN SOTAVENTO",
-    link: "https://www.eluniversal.com/venezuela/142471/despues-20-anos-estrenaran-dos-salas-de-cine-en-el-estado-la-guaira",
+    link: "/view/67ac14d7aa6ce0ce5136475f/full",
   },
 ];
 
@@ -56,7 +57,7 @@ const BigCarousel = () => {
   return (
     <div className="relative w-full overflow-hidden">
       <div className="relative h-48 sm:h-64 md:h-72 lg:h-80 xl:h-96">
-        <a
+        <Link
           href={images[currentIndex].link}
           target="_blank"
           rel="noopener noreferrer"
@@ -73,7 +74,7 @@ const BigCarousel = () => {
               {images[currentIndex].title}
             </h2>
           </div>
-        </a>
+        </Link>
       </div>
 
       {/* Botones de navegación */}
