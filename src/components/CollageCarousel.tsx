@@ -76,7 +76,7 @@ const CollageCarousel = () => {
             {/* Contenido descriptivo (apilado en mobile) */}
             <div className="md:flex md:flex-col md:justify-center w-full sm:w-1/2 px-4 py-4 sm:py-0">
               <h2 className="text-xl sm:text-3xl font-bold text-gray-900">{item.title}</h2>
-              <p className="text-gray-600 mt-2">{item.description}</p>
+              <p className="text-gray-600 mt-2 line-clamp-3">{item.description}</p>
               <Link
                 href={item.link}
                 target="_blank"
