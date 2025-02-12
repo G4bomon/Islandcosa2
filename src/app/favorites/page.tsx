@@ -3,11 +3,10 @@ import { connectDB } from "@/libs/mongodb";
 import News from "@/models/news";
 import User from "@/models/user";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/libs/authOptions";
+
 import Link from "next/link";
-import Navbar from "@/components/navbar";
 import BackButton from "@/components/BackButton";
-import FavoriteButton from "@/components/favoriteButton";
 
 export default async function FavoritesPage() {
   const session = await getServerSession(authOptions);
@@ -25,7 +24,6 @@ export default async function FavoritesPage() {
   return (
     <div>
       <BackButton/>
-      <Navbar />
       <h1 className="text-2xl font-bold text-center my-4">Mis Favoritos</h1>
       <div className="grid md:grid-cols-3 gap-4 pt-8">
         {favoriteArticles.map((article) => (

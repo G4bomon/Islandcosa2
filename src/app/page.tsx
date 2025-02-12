@@ -1,34 +1,42 @@
-import { Badge } from "@/components/ui/badge";
 import { connectDB } from "@/libs/mongodb";
 import News from "@/models/news";
-import Link from "next/link";
-import Navbar from "@/components/navbar";
+import NewsList from "@/components/NewsList";
+import TikTokCarousel from "@/components/Tiktok";
+import CarouselDate from "@/components/CarouselDate";
+import PlayaCarousel from "@/components/PlayaCarousel";
+import BigCarousel from "@/components/BigCarousel";
+import CollageCarousel from "@/components/CollageCarousel";
 
-async function HomePage() {
-  await connectDB(); 
 
-  const newsArticles = await News.find({});
+async function PruebaPage() {
+  await connectDB();
+
+  // Obtener todas las noticias de la base de datos y convertirlas en objetos planos
+  const newsData = await News.find({});
+  const newsArticles = newsData.map((doc) => JSON.parse(JSON.stringify(doc)));
+
+  // Seleccionar los últimos 3 artículos
+  const lastThreeArticles = newsArticles.slice(-3).map((article) => ({
+    id: article._id,
+    title: article.title,
+    articleId: article._id,
+  }));
 
   return (
-    <div>
-      <Navbar /> 
-      <div className="grid grid-cols-3 gap-4 pt-8">
-        {newsArticles.map((article) => (
-          <Link href={`/view/${article._id}/full`} key={article._id}>
-            <div className="border p-4 rounded-lg">
-              <h2 className="text-xl font-bold">{article.title}</h2>
-              <p className="text-sm text-gray-500">Autor: {article.author}</p>
-              <p className="text-sm text-gray-400">
-                Publicado el: {new Date(article.date).toLocaleDateString("es-ES")}
-              </p>
-              <Badge>{article.category}</Badge>
-              <img src={article.image} alt={article.title} />
-            </div>
-          </Link>
-        ))}
-      </div>
+    <div className="p-4">
+      <p className="text-gray-600 mb-6">Bienvenido a NiceTrip</p>
+
+
+      <BigCarousel />
+
+      {/* Los otros componentes */}
+      <NewsList newsArticles={newsArticles} />
+      <CollageCarousel />
+      <TikTokCarousel />
+      <CarouselDate newsArticles={newsArticles} />
+      <PlayaCarousel newsArticles={newsArticles} />
     </div>
   );
 }
 
-export default HomePage;
+export default PruebaPage;

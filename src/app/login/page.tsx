@@ -47,7 +47,7 @@ function Signin() {
     }
 
     if (res?.ok) {
-      router.push("/Pruebas");
+      router.push("/");
       setCaptchaSolved(false);
       setLoginAttempt(1);
     }
