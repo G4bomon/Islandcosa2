@@ -38,53 +38,49 @@ const CollageCarousel = () => {
   };
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto py-4 my-4">
-      <div className="relative flex items-center">
+    <div className="relative w-full max-w-7xl mx-auto py-4 my-4 sm:h-[500px] h-[640px]">
+      <div className="relative flex items-center h-full">
         {items.map((item, index) => (
           <div
             key={index}
-            className={`transition-opacity duration-700 ease-in-out flex items-center w-full ${
-              index === currentIndex ? "opacity-100" : "opacity-0 absolute inset-0"
-            }`}
+            className={`flex h-full flex-col md:flex-row transition-opacity duration-700 ease-in-out w-full ${index === currentIndex ? "opacity-100" : "hidden opacity-0"
+              }`}
           >
-            {/* Contenedor de imágenes con alturas fijas para evitar cambios bruscos */}
-            <div className="grid grid-cols-2 grid-rows-1 gap-4 w-full h-64 sm:h-72 md:h-80 lg:h-96">
+            {/* Contenedor de imágenes con grid adaptable */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full h-auto">
               {/* Imagen principal grande */}
-              <div className="col-span-1">
+              <div>
                 <img
                   src={item.images[0]}
                   alt={item.title}
-                  className="w-full h-full object-cover rounded-lg shadow-lg transform hover:scale-105 transition-transform"
+                  className="w-full sm:h-full max-h-[458px] object-cover rounded-tl-3xl shadow-lg"
                 />
               </div>
 
               {/* Imágenes secundarias */}
-              <div className="flex flex-col justify-between col-span-1 space-y-2">
+              <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 ">
                 <img
                   src={item.images[1]}
                   alt={item.title}
-                  className="w-full h-1/2 object-cover rounded-lg shadow-lg transform hover:scale-105 transition-transform"
+                  className="w-full md:h-full sm:h-1/2 object-cover shadow-lg max-h-[220px]"
                 />
                 <img
                   src={item.images[2]}
                   alt={item.title}
-                  className="w-full h-1/2 object-cover rounded-lg shadow-lg transform hover:scale-105 transition-transform"
+                  className="w-full md:h-full sm:h-1/2 object-cover shadow-lg max-h-[220px]"
                 />
               </div>
             </div>
 
-            {/* Contenido descriptivo */}
-            <div className="w-1/2 pl-6 flex flex-col justify-between h-64 sm:h-72 md:h-80 lg:h-96">
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">{item.title}</h2>
-                <p className="text-gray-600 mb-4 line-clamp-3">{item.description}</p>
-              </div>
-
+            {/* Contenido descriptivo (apilado en mobile) */}
+            <div className="md:flex md:flex-col md:justify-center w-full sm:w-1/2 px-4 py-4 sm:py-0">
+              <h2 className="text-xl sm:text-3xl font-bold text-gray-900">{item.title}</h2>
+              <p className="text-gray-600 mt-2">{item.description}</p>
               <a
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 font-semibold transition-colors underline mt-4 inline-block"
+                className="text-amber-400 hover:text-amber-600 font-semibold underline inline-block"
               >
                 Ver más
               </a>
@@ -95,18 +91,19 @@ const CollageCarousel = () => {
         {/* Botones de navegación */}
         <button
           onClick={prevSlide}
-          className="absolute top-1/2 -translate-y-1/2 left-4 p-4 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition z-50"
+          className="absolute top-1/2 -translate-y-1/2 left-4 p-3 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition z-50"
         >
-          <ChevronLeft size={32} />
+          <ChevronLeft size={28} />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute top-1/2 -translate-y-1/2 right-4 p-4 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition z-50"
+          className="absolute top-1/2 -translate-y-1/2 right-4 p-3 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition z-50"
         >
-          <ChevronRight size={32} />
+          <ChevronRight size={28} />
         </button>
       </div>
     </div>
+
   );
 };
 
