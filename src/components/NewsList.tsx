@@ -72,7 +72,7 @@ const NewsList: React.FC<{ newsArticles: any[] }> = ({ newsArticles }) => {
       {filteredArticles.length > 10 && (
         <div className="md:mt-2 pl-4">
           <button
-            onClick={() => router.push(`/?category=${categoryFilter}`)}
+            onClick={() => router.push(`/vermas`)}
             className="px-6 py-3 bg-[rgba(221,234,255,0.5)] text-black font-medium rounded-lg hover:bg-amber-400 transition"
           >
             Ver más

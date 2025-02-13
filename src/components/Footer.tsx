@@ -17,8 +17,10 @@ const Footer = () => {
               <div className="flex mt-4 sm:justify-center sm:mt-0">
                 <span className="text-xl text-black sm:text-center dark:text-gray-400 mr-4 cursor-default">
                   Sigue nuestras redes sociales
+                  <br />
+                  o contactanos a NiceTrip@gmail.com
                 </span>
-                <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                <a href="instagram.com" className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
                   <Image
                     src="/img/instagram.png"
                     alt="instagram"
@@ -26,7 +28,7 @@ const Footer = () => {
                     height={32}
                   />
                 </a>
-                <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                <a href="facebook.com" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
                   <Image
                     src="/img/facebook.png"
                     alt="facebook"
@@ -34,7 +36,7 @@ const Footer = () => {
                     height={32}
                   />
                 </a>
-                <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                <a href="tiktok.com" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
                   <Image
                     src="/img/tik-tok.png"
                     alt="tiktok"
@@ -42,14 +44,14 @@ const Footer = () => {
                     height={32}
                   />
                 </a>
-                <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                {/* <a href="gmail.com" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
                   <Image
                     src="/img/gmail.png"
                     alt="gmail"
                     width={32}
                     height={32}
                   />
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
