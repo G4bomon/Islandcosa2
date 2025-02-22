@@ -1,8 +1,6 @@
-import { Badge } from "@/components/ui/badge";
 import { connectDB } from "@/libs/mongodb";
 import News from "@/models/news";
 import Link from "next/link";
-import Navbar from "@/components/navbar";
 
 async function HomePage() {
   await connectDB(); 
@@ -11,7 +9,6 @@ async function HomePage() {
 
   return (
     <div>
-      <Navbar /> 
       <div className="grid grid-cols-3 gap-4 pt-8">
         {newsArticles.map((article) => (
           <Link href={`/view/${article._id}/full`} key={article._id}>
